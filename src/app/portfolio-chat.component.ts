@@ -11,7 +11,7 @@ type Message = { role: 'assistant' | 'user'; content: string };
   template: `
     <button class="portfolio-chat-trigger" type="button" (click)="isOpen = !isOpen" [attr.aria-expanded]="isOpen" aria-controls="portfolio-chat-panel">
       <span class="chat-spark">✦</span>
-      <span>Ask Nouman AI</span>
+      <span>Ask Nouman</span>
     </button>
 
     <section *ngIf="isOpen" id="portfolio-chat-panel" class="portfolio-chat-panel" aria-label="Nouman's portfolio assistant">
