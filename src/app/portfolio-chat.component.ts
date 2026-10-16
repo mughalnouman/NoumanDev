@@ -11,7 +11,7 @@ type Message = { role: 'assistant' | 'user'; content: string };
   template: `
     <button class="portfolio-chat-trigger" type="button" (click)="isOpen = !isOpen" [attr.aria-expanded]="isOpen" aria-controls="portfolio-chat-panel">
       <span class="chat-spark">✦</span>
-      <span>Ask AI Assistant</span>
+      <span>Ask Nouman AI</span>
     </button>
 
     <section *ngIf="isOpen" id="portfolio-chat-panel" class="portfolio-chat-panel" aria-label="Nouman's portfolio assistant">
@@ -24,7 +24,7 @@ type Message = { role: 'assistant' | 'user'; content: string };
         <button type="button" (click)="isOpen = false" aria-label="Close portfolio assistant">×</button>
       </header>
 
-      <div class="chat-messages" aria-live="polite">
+      <div class="chat-messages custom-thin-scroll" aria-live="polite">
         <div *ngFor="let item of messages" class="chat-message" [class.user]="item.role === 'user'">
           {{ item.content }}
         </div>
@@ -78,10 +78,10 @@ type Message = { role: 'assistant' | 'user'; content: string };
       position: fixed;
       z-index: 61;
       right: 26px;
-      bottom: 82px;
-      width: min(390px, calc(100vw - 28px));
+      bottom: 84px;
+      width: min(440px, calc(100vw - 32px));
       border: 1px solid rgba(103,138,255,.55);
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
       background: linear-gradient(145deg,rgba(8,21,54,.98),rgba(3,10,28,.99));
       color: #eef3ff;
@@ -93,7 +93,7 @@ type Message = { role: 'assistant' | 'user'; content: string };
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      padding: 16px 18px;
+      padding: 16px 20px;
       border-bottom: 1px solid rgba(92,133,255,.25);
       background: linear-gradient(90deg,rgba(26,96,255,.2),rgba(154,44,255,.16));
     }
@@ -103,7 +103,7 @@ type Message = { role: 'assistant' | 'user'; content: string };
       column-gap: 10px;
       align-items: center;
     }
-    .portfolio-chat-panel strong { font-size: 13px; }
+    .portfolio-chat-panel strong { font-size: 14px; }
     .portfolio-chat-panel small { grid-column: 2; color: #9aadd3; font-size: 11px; margin-top: 2px; }
     .chat-status {
       width: 8px;
@@ -123,23 +123,38 @@ type Message = { role: 'assistant' | 'user'; content: string };
     }
     .chat-messages {
       display: flex;
-      min-height: 180px;
-      max-height: 320px;
+      min-height: 220px;
+      max-height: 400px;
       overflow-y: auto;
       flex-direction: column;
-      gap: 10px;
-      padding: 16px;
+      gap: 12px;
+      padding: 18px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(98, 140, 255, 0.4) transparent;
+    }
+    .chat-messages::-webkit-scrollbar {
+      width: 5px;
+    }
+    .chat-messages::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: rgba(98, 140, 255, 0.4);
+      border-radius: 10px;
+    }
+    .chat-messages::-webkit-scrollbar-thumb:hover {
+      background: rgba(140, 175, 255, 0.7);
     }
     .chat-message {
       align-self: flex-start;
       max-width: 88%;
-      padding: 10px 13px;
+      padding: 11px 15px;
       border: 1px solid rgba(98,130,222,.24);
       border-radius: 4px 14px 14px 14px;
       background: #112553;
       color: #dde8ff;
-      font-size: 12px;
-      line-height: 1.55;
+      font-size: 13px;
+      line-height: 1.6;
       white-space: pre-wrap;
     }
     .chat-message.user {

@@ -73,7 +73,7 @@ import { projects, skills } from './portfolio.data';
           </div>
         </div>
 
-        <img class="workstation-art" src="assets/images/hero-section.png" alt="Neon developer workstation">
+        <!-- <img class="workstation-art" src="assets/images/hero-section.png" alt="Neon developer workstation"> -->
         <span class="float-tag angular">▲ Angular 19</span>
         <span class="float-tag dotnet">.NET Core & C#</span>
         <span class="float-tag sql">▣ SQL Server</span>

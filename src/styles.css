@@ -1,4 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html{scroll-behavior:smooth}body{margin:0;background:#030a1a}*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:#030a1a;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(98, 140, 255, 0.45) #030a1a;
+}
+* {
+  box-sizing: border-box;
+}
+
+/* Global elegant thin scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #030a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(98, 140, 255, 0.35);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(140, 180, 255, 0.65);
+}
