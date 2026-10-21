@@ -17,7 +17,12 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [{ "glob": "**/*", "input": "images", "output": "assets/images" }, { "glob": "NoumanAhmad_FullStack.pdf", "input": "src/cv", "output": "assets/documents" }],
+            "assets": [
+              { "glob": "**/*", "input": "images", "output": "assets/images" },
+              { "glob": "NoumanAhmad_FullStack.pdf", "input": "src/cv", "output": "assets/documents" },
+              "src/favicon.ico",
+              "src/favicon.png"
+            ],
             "styles": ["src/styles.css"]
           },
           "configurations": { "production": { "optimization": { "scripts": true, "styles": { "minify": true, "inlineCritical": true }, "fonts": false }, "budgets": [{ "type": "initial", "maximumWarning": "700kB", "maximumError": "1MB" }], "outputHashing": "all" }, "development": { "optimization": false, "sourceMap": true } },
