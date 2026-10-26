@@ -25,7 +25,7 @@
             ],
             "styles": ["src/styles.css"]
           },
-          "configurations": { "production": { "optimization": { "scripts": true, "styles": { "minify": true, "inlineCritical": true }, "fonts": false }, "budgets": [{ "type": "initial", "maximumWarning": "700kB", "maximumError": "1MB" }], "outputHashing": "all" }, "development": { "optimization": false, "sourceMap": true } },
+          "configurations": { "production": { "optimization": { "scripts": true, "styles": { "minify": true, "inlineCritical": true }, "fonts": false }, "budgets": [{ "type": "initial", "maximumWarning": "2MB", "maximumError": "4MB" }], "outputHashing": "all" }, "development": { "optimization": false, "sourceMap": true } },
           "defaultConfiguration": "production"
         },
         "serve": { "builder": "@angular/build:dev-server", "configurations": { "production": { "buildTarget": "portfolio:build:production" }, "development": { "buildTarget": "portfolio:build:development" } }, "defaultConfiguration": "development" }

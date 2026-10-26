@@ -1,2 +1,98 @@
-<main><div class="noise"></div><div class="progress"></div><header class="navbar" aria-label="Primary navigation"><a class="brand" routerLink="/"><span>NA</span><small>Nouman Ahmad</small></a><nav [class.open]="menuOpen"><a *ngFor="let item of nav" [routerLink]="item[1]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:item[1] === '/'}" (click)="menuOpen=false">{{item[0]}}</a></nav><div class="nav-actions"><a class="talk" routerLink="/contact">Let's Talk <span>↗</span></a><button class="menu" (click)="menuOpen=!menuOpen" aria-label="Open menu">☰</button></div></header><router-outlet></router-outlet><footer><a class="brand" routerLink="/"><span>NA</span><small>Nouman Ahmad<br><em>Full Stack Engineer</em></small></a><nav><a *ngFor="let item of nav" [routerLink]="item[1]">{{item[0]}}</a></nav><div class="footer-social"><a class="linkedin-icon" href="https://linkedin.com/in/nouman-ahmad-59022942a" target="_blank" rel="noopener" aria-label="LinkedIn">in</a><a class="github-icon" href="https://github.com/mughalnouman" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.5c-2.23.49-2.7-.95-2.7-.95-.36-.93-.9-1.18-.9-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.22 1.87.87 2.32.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.96 0-.88.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.21 2.2.82A7.67 7.67 0 0 1 8 4.8c.68 0 1.36.09 2 .27 1.53-1.03 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.27.82 2.15 0 3.08-1.87 3.76-3.65 3.96.29.25.54.73.54 1.47v2.18c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg></a><a class="whatsapp-icon-btn" href="https://wa.me/923214940440" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#25D366" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.79 14.16c-.24.68-1.2 1.25-1.72 1.33-.49.07-1.12.1-3.23-.77-2.69-1.11-4.44-3.83-4.57-4-.14-.18-1.09-1.45-1.09-2.77 0-1.31.69-1.96.93-2.22.25-.26.54-.33.72-.33.18 0 .36 0 .52.01.17.01.4-.06.62.48.24.57.81 1.98.88 2.13.07.14.12.31.02.5-.09.19-.14.3-.29.47-.14.17-.3.38-.43.51-.14.14-.29.3-.12.59.16.29.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.28 1.4.29.14.46.12.63-.07.17-.19.73-.85.92-1.14.19-.29.39-.24.65-.14.26.1.1.66 1.66 1.43.56.27.93.41 1.07.63.14.22.14.85-.1 1.53z"/></svg></a><a class="email-icon" href="https://mail.google.com/mail/?view=cm&fs=1&to=mughalnouman678@gmail.com" target="_blank" rel="noopener" aria-label="Gmail"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#EA4335" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a><small>© 2026 Nouman Ahmad</small></div></footer></main>
+<!-- FUTURISTIC ARCHITECTURAL PRELOADER -->
+<div *ngIf="isPreloaderVisible" class="cyber-preloader" (click)="skipPreloader()" aria-label="Loading portfolio experience">
+  <div class="preloader-grid"></div>
+  <div class="preloader-ambient-glow"></div>
+  
+  <div class="preloader-content">
+    <!-- Center Monogram Hologram -->
+    <div class="preloader-rings-wrapper">
+      <div class="ring-pulse"></div>
+      <div class="ring-spin"></div>
+      <div class="ring-core">
+        <span class="core-brand">NA</span>
+      </div>
+    </div>
+
+    <!-- Title & Tagline -->
+    <div class="preloader-titles">
+      <h2 class="preloader-name">Nouman Ahmad</h2>
+      <p class="preloader-sub">Full Stack & Distributed Systems Architect</p>
+    </div>
+
+    <!-- Laser Progress Meter -->
+    <div class="preloader-meter-bar">
+      <div class="preloader-meter-fill" [style.width.%]="loadingProgress">
+        <div class="meter-laser-spark"></div>
+      </div>
+    </div>
+
+    <!-- Progress Percentage & Live System Log -->
+    <div class="preloader-status-row">
+      <div class="status-stream">
+        <span class="stream-dot">●</span>
+        <span class="stream-text">{{ statusLog }}</span>
+      </div>
+      <div class="status-percent font-mono">
+        <b>{{ loadingProgress }}</b><span>%</span>
+      </div>
+    </div>
+
+    <!-- Interactive Skip Hint -->
+    <div class="preloader-skip-hint">
+      <span>Click anywhere to skip ↗</span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="noise"></div>
+  <div class="progress"></div>
+  <header class="navbar" aria-label="Primary navigation">
+    <a class="brand" routerLink="/">
+      <span>NA</span>
+      <small>Nouman Ahmad</small>
+    </a>
+    <nav [class.open]="menuOpen">
+      <a *ngFor="let item of nav" [routerLink]="item[1]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:item[1] === '/'}" (click)="menuOpen=false">
+        {{ item[0] }}
+      </a>
+    </nav>
+    <div class="nav-actions">
+      <a class="talk" routerLink="/contact">Let's Talk <span>↗</span></a>
+      <button class="menu" (click)="menuOpen=!menuOpen" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <router-outlet></router-outlet>
+
+  <footer>
+    <a class="brand" routerLink="/">
+      <span>NA</span>
+      <small>Nouman Ahmad<br><em>Full Stack & Systems Engineer</em></small>
+    </a>
+    <nav>
+      <a *ngFor="let item of nav" [routerLink]="item[1]">{{ item[0] }}</a>
+    </nav>
+    <div class="footer-social">
+      <a class="linkedin-icon" href="https://linkedin.com/in/nouman-ahmad-59022942a" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+      <a class="github-icon" href="https://github.com/mughalnouman" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.5c-2.23.49-2.7-.95-2.7-.95-.36-.93-.9-1.18-.9-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.22 1.87.87 2.32.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.96 0-.88.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.21 2.2.82A7.67 7.67 0 0 1 8 4.8c.68 0 1.36.09 2 .27 1.53-1.03 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.27.82 2.15 0 3.08-1.87 3.76-3.65 3.96.29.25.54.73.54 1.47v2.18c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/>
+        </svg>
+      </a>
+      <a class="whatsapp-icon-btn" href="https://wa.me/923214940440" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#25D366" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.79 14.16c-.24.68-1.2 1.25-1.72 1.33-.49.07-1.12.1-3.23-.77-2.69-1.11-4.44-3.83-4.57-4-.14-.18-1.09-1.45-1.09-2.77 0-1.31.69-1.96.93-2.22.25-.26.54-.33.72-.33.18 0 .36 0 .52.01.17.01.4-.06.62.48.24.57.81 1.98.88 2.13.07.14.12.31.02.5-.09.19-.14.3-.29.47-.14.17-.3.38-.43.51-.14.14-.29.3-.12.59.16.29.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.28 1.4.29.14.46.12.63-.07.17-.19.73-.85.92-1.14.19-.29.39-.24.65-.14.26.1.1.66 1.66 1.43.56.27.93.41 1.07.63.14.22.14.85-.1 1.53z"/>
+        </svg>
+      </a>
+      <a class="email-icon" href="https://mail.google.com/mail/?view=cm&fs=1&to=mughalnouman678@gmail.com" target="_blank" rel="noopener" aria-label="Gmail">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#EA4335" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+      </a>
+      <small>© 2026 Nouman Ahmad</small>
+    </div>
+  </footer>
+</main>
+
 <app-portfolio-chat></app-portfolio-chat>

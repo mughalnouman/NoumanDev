@@ -1,93 +1,328 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { projects, skills } from './portfolio.data';
+import * as THREE from 'three';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   template: `
-    <!-- HERO SECTION WITH DYNAMIC HEADLINE & LIVE CODE TERMINAL -->
+    <!-- 3D INTERACTIVE WEBGL BACKGROUND CANVAS -->
+    <div class="canvas-container" aria-hidden="true">
+      <canvas #threeCanvas class="webgl-canvas"></canvas>
+      <div class="ambient-glow glow-top"></div>
+      <div class="ambient-glow glow-bottom"></div>
+    </div>
+
+    <!-- HERO SECTION WITH 3D DUAL-PERSONA INTERACTIVE SHOWCASE -->
     <section id="home" class="hero section">
-      <div class="hero-copy reveal">
+      <div class="hero-copy">
         <div class="eyebrow-row">
-          <span class="eyebrow available"><i></i> Available for full-time & contracts</span>
-          <span class="location-badge">📍 Lahore, Pakistan (Remote Ready)</span>
+          <span class="eyebrow available">
+            <span class="pulse-emerald-dot"></span>
+            Available for Enterprise & Contract Roles
+          </span>
+          <span class="location-badge">📍 Lahore, Pakistan • Global Remote</span>
         </div>
 
-        <p class="mini-name">Hello, I'm <strong>Nouman Ahmad</strong></p>
+        <p class="mini-name">Hello, I'm <strong class="name-highlight">Nouman Ahmad</strong></p>
         
         <h1 class="hero-heading">
-          Full Stack Engineer<br>
+          Full Stack & Distributed<br>
           <span class="typewriter-container">
-            <em>{{ currentRoleText }}</em><span class="typewriter-cursor">|</span>
+            <em class="gradient-text">{{ currentRoleText }}</em><span class="typewriter-cursor">|</span>
           </span>
         </h1>
 
         <p class="lead">
-          Architecting high-performance enterprise platforms, multi-tenant CRMs, and real-time distributed systems using 
-          <strong>Angular 19, ASP.NET Core & SQL Server.</strong>
+          Crafting ultra-scalable multi-tenant CRMs, high-throughput REST APIs, and real-time reactive SPAs utilizing 
+          <strong>Angular 19, ASP.NET Core, SignalR & SQL Server.</strong>
         </p>
 
+        <!-- Call to Actions -->
         <div class="hero-buttons">
-          <a class="primary glow-btn" routerLink="/projects">Explore Architecture & Projects <span>→</span></a>
-          <a class="secondary" href="assets/documents/NoumanAhmad_FullStack.pdf" download>↓ Download CV</a>
+          <a class="primary glow-btn" routerLink="/projects">
+            <span>Explore Architecture & Projects</span>
+            <span class="btn-arrow">→</span>
+          </a>
+          <a class="secondary" href="assets/documents/NoumanAhmad_FullStack.pdf" download>
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            Download CV (PDF)
+          </a>
+          <a class="whatsapp-btn" [href]="whatsAppLink" target="_blank" rel="noopener">
+            <svg class="w-4 h-4 mr-1.5" viewBox="0 0 24 24" fill="#25D366">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.79 14.16c-.24.68-1.2 1.25-1.72 1.33-.49.07-1.12.1-3.23-.77-2.69-1.11-4.44-3.83-4.57-4-.14-.18-1.09-1.45-1.09-2.77 0-1.31.69-1.96.93-2.22.25-.26.54-.33.72-.33.18 0 .36 0 .52.01.17.01.4-.06.62.48.24.57.81 1.98.88 2.13.07.14.12.31.02.5-.09.19-.14.3-.29.47-.14.17-.3.38-.43.51-.14.14-.29.3-.12.59.16.29.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.28 1.4.29.14.46.12.63-.07.17-.19.73-.85.92-1.14.19-.29.39-.24.65-.14.26.1.1.66 1.66 1.43.56.27.93.41 1.07.63.14.22.14.85-.1 1.53z"/>
+            </svg>
+            WhatsApp
+          </a>
         </div>
 
         <div class="stats">
-          <div><b>2+</b><span>Years Experience</span></div>
-          <div><b>10+</b><span>Projects Built</span></div>
-          <div><b>99.9%</b><span>Architecture Reliability</span></div>
+          <div><b>2+</b><span>Years Production Exp</span></div>
+          <div><b>10+</b><span>Deployments Built</span></div>
+          <div><b>99.9%</b><span>Architecture Uptime</span></div>
         </div>
       </div>
 
-      <!-- INTERACTIVE FULL STACK CONSOLE & 3D ART -->
-      <div class="hero-visual hero-workstation">
-        <div class="scene-grid"></div>
-        <div class="hero-rings"></div>
-        <div class="hero-spark spark-one"></div>
-        <div class="hero-spark spark-two"></div>
-        
-        <!-- Interactive Live Code Terminal Widget -->
-        <div class="interactive-terminal">
-          <div class="terminal-bar">
-            <div class="term-dots">
-              <span class="dot-red"></span>
-              <span class="dot-yellow"></span>
-              <span class="dot-green"></span>
-            </div>
-            <span class="term-title">nouman-core-api.cs — ASP.NET & Angular</span>
-            <span class="term-status">● Live</span>
-          </div>
-          <div class="terminal-body">
-            <p class="term-line"><span class="t-kw">namespace</span> <span class="t-type">Enterprise.Architecture</span> &#123;</p>
-            <p class="term-line indent"><span class="t-kw">public record</span> <span class="t-func">DeveloperProfile</span>(</p>
-            <p class="term-line indent-2"><span class="t-str">"Nouman Ahmad"</span>, <span class="t-str">"Full Stack Specialist"</span>,</p>
-            <p class="term-line indent-2"><span class="t-prop">Frontend:</span> <span class="t-str">"Angular 19 + TypeScript + PrimeNG"</span>,</p>
-            <p class="term-line indent-2"><span class="t-prop">Backend:</span> <span class="t-str">"ASP.NET Core + ABP + SignalR"</span>,</p>
-            <p class="term-line indent-2"><span class="t-prop">Database:</span> <span class="t-str">"SQL Server (Clean Architecture)"</span></p>
-            <p class="term-line indent">);</p>
-            <p class="term-line"><span class="t-comment">// HTTP 200 OK — Ready for Production Scale</span></p>
-          </div>
+      <!-- 3D DUAL-PERSONA INTERACTIVE CARD WITH REAL USER IMAGES -->
+      <div class="hero-visual">
+        <div class="persona-switch-bar">
+          <button 
+            type="button" 
+            [class.active]="activePersona === 'developer'" 
+            (click)="activePersona = 'developer'">
+            💻 Full Stack Creator
+          </button>
+          <button 
+            type="button" 
+            [class.active]="activePersona === 'executive'" 
+            (click)="activePersona = 'executive'">
+            👔 Enterprise Architect
+          </button>
         </div>
 
-        <!-- <img class="workstation-art" src="assets/images/hero-section.png" alt="Neon developer workstation"> -->
-        <span class="float-tag angular">▲ Angular 19</span>
-        <span class="float-tag dotnet">.NET Core & C#</span>
-        <span class="float-tag sql">▣ SQL Server</span>
-        <span class="float-tag clean">Clean Architecture<br>SignalR Real-Time<br>JWT & RBAC Security</span>
+        <!-- 3D Perspective Tilt Card -->
+        <div 
+          #personaCard 
+          class="hero-persona-card" 
+          (mousemove)="onCardMouseMove($event)" 
+          (mouseleave)="onCardMouseLeave()">
+          
+          <div class="card-inner" [style.transform]="cardTransform">
+            <!-- Glare reflection layer -->
+            <div class="card-glare" [style.background]="cardGlare"></div>
+            
+            <div class="image-wrapper">
+              <!-- Developer Portrait -->
+              <img 
+                *ngIf="activePersona === 'developer'" 
+                src="assets/images/nouman-developer.jpg" 
+                alt="Nouman Ahmad - Full Stack Creator"
+                class="persona-img dev-img"
+              />
+              <!-- Executive Portrait -->
+              <img 
+                *ngIf="activePersona === 'executive'" 
+                src="assets/images/nouman-executive.jpg" 
+                alt="Nouman Ahmad - Enterprise Architect"
+                class="persona-img exec-img"
+              />
+              
+              <!-- Subtle gradient overlay -->
+              <div class="card-overlay"></div>
+            </div>
+
+            <!-- Card Bottom Bar Info -->
+            <div class="card-caption">
+              <div class="caption-header">
+                <div>
+                  <h4 class="caption-name">Nouman Ahmad</h4>
+                  <p class="caption-role">
+                    {{ activePersona === 'developer' ? 'Lead Full Stack Specialist' : 'Enterprise Solutions Architect' }}
+                  </p>
+                </div>
+                <span class="verified-badge" title="Verified Engineering Credentials">✓</span>
+              </div>
+
+              <!-- Tech chips corresponding to persona -->
+              <div class="persona-chips" *ngIf="activePersona === 'developer'">
+                <span>Angular 19</span>
+                <span>TypeScript</span>
+                <span>SignalR</span>
+                <span>Tailwind</span>
+              </div>
+              <div class="persona-chips" *ngIf="activePersona === 'executive'">
+                <span>ASP.NET Core</span>
+                <span>ABP Framework</span>
+                <span>SQL Server</span>
+                <span>Clean Arch</span>
+              </div>
+            </div>
+
+            <!-- Floating Micro Badges -->
+            <div class="float-badge badge-top-left">
+              <span class="dot-live">●</span>
+              <span>Available for Hire</span>
+            </div>
+            <div class="float-badge badge-bottom-right">
+              <span>99.9% Reliable Systems</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- LIVE TECH MARQUEE -->
+    <!-- LIVE MARQUEE WITH MODERN HIGH CONTRAST BADGES -->
     <section class="marquee" aria-label="Technology stack">
       <div class="marquee-track">
-        <div class="tech-pill" *ngFor="let item of marqueeTech.concat(marqueeTech)">
-          <img [src]="item.icon" [alt]="item.name + ' logo'">
-          {{ item.name }}
+        <div class="tech-pill" *ngFor="let item of fullMarquee">
+          <img [src]="item.icon" [alt]="item.name + ' icon'" loading="lazy">
+          <span>{{ item.name }}</span>
         </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTION ECOSYSTEM & DEPLOYMENT RADAR (VERCEL, NETLIFY, GITHUB, LOVABLE, REELS) -->
+    <section class="ecosystem-section section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Production Ecosystem</span>
+          <h2>Cloud Deployments & <em>Engineering Radar</em></h2>
+        </div>
+        <p class="section-subtitle">Battle-tested CI/CD pipelines, edge serverless hosting, and modern workflow velocity.</p>
+      </div>
+
+      <!-- Bento Grid for Ecosystem -->
+      <div class="bento-grid">
+        
+        <!-- Bento Card 1: Vercel & Netlify Edge Deployment Hub -->
+        <article class="bento-card bento-vercel">
+          <div class="bento-header">
+            <div class="badge-icon-row">
+              <span class="hub-tag">Edge Infrastructure</span>
+              <span class="status-live-pill"><span class="pulse-dot"></span> Edge CDN Active</span>
+            </div>
+            <h3>Vercel & Netlify Production Pipeline</h3>
+            <p>Automated Git-triggered builds with zero-downtime rollouts, global edge caching, and serverless API gateways.</p>
+          </div>
+          
+          <div class="edge-metrics-row">
+            <div class="edge-stat">
+              <span class="stat-number">24ms</span>
+              <span class="stat-label">Global TTFB</span>
+            </div>
+            <div class="edge-stat">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">CI/CD Automation</span>
+            </div>
+            <div class="edge-stat">
+              <span class="stat-number">Edge</span>
+              <span class="stat-label">Distributed Network</span>
+            </div>
+          </div>
+
+          <div class="bento-tags">
+            <span>▲ Vercel Edge</span>
+            <span>⚡ Netlify High-Avail</span>
+            <span>✦ GitHub Actions</span>
+            <span>☁ Cloudflare CDN</span>
+          </div>
+        </article>
+
+        <!-- Bento Card 2: GitHub Repository & Open Source Velocity -->
+        <article class="bento-card bento-github">
+          <div class="bento-header">
+            <div class="badge-icon-row">
+              <span class="hub-tag">Source Control</span>
+              <a href="https://github.com/mughalnouman" target="_blank" rel="noopener" class="hub-link">github.com/mughalnouman ↗</a>
+            </div>
+            <h3>Clean Architecture & Open Codebase</h3>
+            <p>Strictly typed Angular 19 codebases, decoupled ASP.NET Core Clean Architecture solutions, and automated test suites.</p>
+          </div>
+
+          <div class="github-commit-sim">
+            <div class="sim-header">
+              <span class="branch-pill">main</span>
+              <span class="sim-msg">feat: real-time SignalR notifications & multi-tenancy</span>
+            </div>
+            <div class="sim-grid">
+              <div *ngFor="let cell of commitCells" [class]="'cell ' + cell"></div>
+            </div>
+          </div>
+
+          <div class="bento-tags">
+            <span>Repository Radar</span>
+            <span>ABP Framework</span>
+            <span>Clean Architecture</span>
+            <span>Dockerized</span>
+          </div>
+        </article>
+
+        <!-- Bento Card 3: Lovable & AI-Native Velocity Showcase -->
+        <article class="bento-card bento-lovable">
+          <div class="bento-header">
+            <div class="badge-icon-row">
+              <span class="hub-tag">Velocity Accelerator</span>
+              <span class="tag-accent">AI-Powered Rapid Prototyping</span>
+            </div>
+            <h3>Lovable & Modern Frontend Velocity</h3>
+            <p>Leveraging state-of-the-art generative engineering tools to prototype, iterate, and deliver responsive interfaces at 10x speed.</p>
+          </div>
+
+          <div class="velocity-meter">
+            <div class="meter-bar">
+              <div class="meter-fill" style="width: 95%"></div>
+            </div>
+            <div class="meter-labels">
+              <span>Ideation to Live Deployment</span>
+              <b>95% Velocity</b>
+            </div>
+          </div>
+
+          <div class="bento-tags">
+            <span>Lovable.dev</span>
+            <span>Design-to-Code</span>
+            <span>Component Tokens</span>
+            <span>Tailwind CSS</span>
+          </div>
+        </article>
+
+        <!-- Bento Card 4: Interactive Reels / Video Demo Player Card -->
+        <article class="bento-card bento-reel">
+          <div class="reel-frame">
+            <div class="reel-top-bar">
+              <div class="reel-user">
+                <img src="assets/images/nouman-developer.jpg" alt="Nouman Avatar" class="reel-avatar">
+                <div>
+                  <span class="reel-name">&#64;mughalnouman</span>
+                  <span class="reel-sub">Full Stack Reel</span>
+                </div>
+              </div>
+              <span class="reel-follow-pill">Follow</span>
+            </div>
+
+            <!-- Simulated live animated demo inside reel -->
+            <div class="reel-screen" (click)="toggleReelPlay()">
+              <div class="reel-glow"></div>
+              
+              <!-- Animated terminal demonstration -->
+              <div class="reel-code-run">
+                <div class="code-line"><span class="c-kw">SignalR.Hub</span>.Broadcast(<span class="c-str">"NewTaskAssigned"</span>);</div>
+                <div class="code-line"><span class="c-comment">// Enterprise CRM live sync: 0.12ms</span></div>
+                <div class="code-line success-line">✓ WebSocket connected: client-app-39</div>
+                <div class="code-line"><span class="c-prop">Tenant:</span> <span class="c-str">"MaxOut Corp"</span> [Active]</div>
+              </div>
+
+              <!-- Play / Pause Overlay Icon -->
+              <div class="reel-play-btn">
+                <span *ngIf="!reelPlaying">▶</span>
+                <span *ngIf="reelPlaying" class="equalizer-bars">
+                  <i></i><i></i><i></i><i></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="reel-bottom-actions">
+              <div class="reel-stats">
+                <span>❤️ 1,420</span>
+                <span>💬 89</span>
+                <span>↗ 310</span>
+              </div>
+              <span class="reel-caption-text">Building enterprise CRM with Angular & .NET</span>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -95,10 +330,10 @@ import { projects, skills } from './portfolio.data';
     <section class="architecture-section section">
       <div class="section-heading">
         <div>
-          <span class="eyebrow">Enterprise Ready</span>
-          <h2>How I <em>Architect Solutions</em></h2>
+          <span class="eyebrow">System Design</span>
+          <h2>How I <em>Architect Enterprise Systems</em></h2>
         </div>
-        <p class="section-subtitle">Bridging resilient backend microservices with sleek, reactive frontend interfaces.</p>
+        <p class="section-subtitle">Decoupled Clean Architecture bridging resilient backend services with responsive SPAs.</p>
       </div>
 
       <div class="arch-tabs">
@@ -106,25 +341,25 @@ import { projects, skills } from './portfolio.data';
           <span>01.</span> Frontend Architecture
         </button>
         <button [class.active]="activeArchTab === 'backend'" (click)="activeArchTab = 'backend'">
-          <span>02.</span> Backend & APIs
+          <span>02.</span> Backend & Clean APIs
         </button>
         <button [class.active]="activeArchTab === 'database'" (click)="activeArchTab = 'database'">
           <span>03.</span> Database & Cloud
         </button>
       </div>
 
-      <div class="arch-card" [ngSwitch]="activeArchTab">
+      <div class="arch-card glass-panel" [ngSwitch]="activeArchTab">
         <!-- Frontend Tab -->
         <div *ngSwitchCase="'frontend'" class="arch-content">
           <div class="arch-text">
             <h3>Component-Driven & Reactive Frontends</h3>
             <p>
-              I build enterprise-grade SPAs utilizing <strong>Angular (Signals & RxJS)</strong>, structured into reusable feature modules, lazy-loaded routing, and optimized change detection.
+              I build enterprise-grade SPAs utilizing <strong>Angular 19 (Signals & RxJS)</strong>, structured into reusable feature modules, lazy-loaded routing, and optimized change detection.
             </p>
             <ul class="arch-points">
-              <li><strong>Modern UI Kits:</strong> Pixel-perfect implementation with PrimeNG, Tailwind CSS, and custom design tokens.</li>
+              <li><strong>Modern UI Kits:</strong> Pixel-perfect implementation with PrimeNG, Tailwind CSS, GSAP, and design tokens.</li>
               <li><strong>Real-Time Sync:</strong> Integrated WebSocket and SignalR hubs for instant notifications and live state updates.</li>
-              <li><strong>Security:</strong> Client-side route guards, HTTP interceptors with automatic JWT token refresh.</li>
+              <li><strong>Security:</strong> Client-side route guards, HTTP interceptors with automated JWT token refresh workflows.</li>
             </ul>
           </div>
           <div class="arch-badge-panel">
@@ -133,7 +368,8 @@ import { projects, skills } from './portfolio.data';
             <span class="arch-pill">PrimeNG</span>
             <span class="arch-pill">Tailwind CSS</span>
             <span class="arch-pill">RxJS & Signals</span>
-            <span class="arch-pill">React</span>
+            <span class="arch-pill">GSAP Motion</span>
+            <span class="arch-pill">Three.js 3D</span>
           </div>
         </div>
 
@@ -185,36 +421,7 @@ import { projects, skills } from './portfolio.data';
       </div>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section class="about section">
-      <div class="about-photo">
-        <img src="assets/images/portfolio_hero.png" alt="Portrait of Nouman Ahmad">
-        <div class="portrait-social">
-          <a href="https://linkedin.com/in/nouman-ahmad-59022942a" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
-          <a href="https://github.com/mughalnouman" target="_blank" rel="noopener" aria-label="GitHub">
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.5c-2.23.49-2.7-.95-2.7-.95-.36-.93-.9-1.18-.9-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.22 1.87.87 2.32.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.96 0-.88.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.21 2.2.82A7.67 7.67 0 0 1 8 4.8c.68 0 1.36.09 2 .27 1.53-1.03 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.27.82 2.15 0 3.08-1.87 3.76-3.65 3.96.29.25.54.73.54 1.47v2.18c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/>
-            </svg>
-          </a>
-          <a href="mailto:mughalnouman678@gmail.com" aria-label="Email">&#9993;</a>
-        </div>
-      </div>
-      <div class="about-copy">
-        <span class="eyebrow">About Me</span>
-        <h2>Full Stack Developer with a <em>Passion for Building</em> High-Impact Systems</h2>
-        <p>
-          I'm a Full Stack Developer with 2+ years of professional experience building enterprise applications with Angular and ASP.NET Core across multi-tenant CRM, inventory ERP, and accounting systems.
-        </p>
-        <div class="about-metrics">
-          <div><b>2+</b><span>Years Experience</span></div>
-          <div><b>10+</b><span>Projects Completed</span></div>
-          <div><b>100%</b><span>Client & Team Focus</span></div>
-        </div>
-        <a class="primary" routerLink="/about">More About My Background <span>→</span></a>
-      </div>
-    </section>
-
-    <!-- SELECTED PROJECTS SECTION WITH RECRUITER METRIC BADGES -->
+    <!-- SELECTED PRODUCTION PROJECTS SECTION -->
     <section id="projects" class="projects section">
       <div class="section-heading">
         <div>
@@ -223,10 +430,11 @@ import { projects, skills } from './portfolio.data';
         </div>
         <a class="text-link" routerLink="/projects">View All Projects →</a>
       </div>
-      <div class="project-grid compact">
-        <article class="project-card glow-card" *ngFor="let project of projects">
+      
+      <div class="project-grid">
+        <article class="project-card glass-card" *ngFor="let project of projects">
           <div class="project-image">
-            <img [src]="project.image" [alt]="project.title + ' screenshot'">
+            <img [src]="project.image" [alt]="project.title + ' screenshot'" loading="lazy">
             <span class="status">{{ project.status }}</span>
           </div>
           <div class="project-content">
@@ -245,22 +453,58 @@ import { projects, skills } from './portfolio.data';
       </div>
     </section>
 
-    <!-- TECH STACK & METERS -->
+    <!-- ABOUT SECTION WITH EDITORIAL REFINEMENT -->
+    <section class="about section">
+      <div class="about-photo glass-card">
+        <img src="assets/images/nouman-executive.jpg" alt="Nouman Ahmad - Full Stack Developer">
+        <div class="portrait-social">
+          <a href="https://linkedin.com/in/nouman-ahmad-59022942a" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+          <a href="https://github.com/mughalnouman" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.5c-2.23.49-2.7-.95-2.7-.95-.36-.93-.9-1.18-.9-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.22 1.87.87 2.32.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.96 0-.88.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.21 2.2.82A7.67 7.67 0 0 1 8 4.8c.68 0 1.36.09 2 .27 1.53-1.03 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.27.82 2.15 0 3.08-1.87 3.76-3.65 3.96.29.25.54.73.54 1.47v2.18c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/>
+            </svg>
+          </a>
+          <a href="mailto:mughalnouman678@gmail.com" aria-label="Email">&#9993;</a>
+        </div>
+      </div>
+
+      <div class="about-copy glass-card">
+        <span class="eyebrow">Engineering Leadership</span>
+        <h2>Building Resilient Products with <em>Clarity, Velocity & Care</em></h2>
+        <p>
+          I am a Full Stack Developer with 2+ years of hands-on production experience architecting enterprise applications with Angular 19 and ASP.NET Core across multi-tenant CRM, inventory ERP, and accounting platforms.
+        </p>
+        <p>
+          My engineering methodology focuses on clean modular boundaries, decoupled service architecture, automated data pipelines, and responsive, accessible user interfaces that leave a lasting impression.
+        </p>
+        <div class="about-metrics">
+          <div><b>2+</b><span>Years Production Exp</span></div>
+          <div><b>10+</b><span>Projects Completed</span></div>
+          <div><b>100%</b><span>Client & Delivery Focus</span></div>
+        </div>
+        <div class="about-actions">
+          <a class="primary" routerLink="/about">More About My Background <span>→</span></a>
+          <a class="whatsapp-btn-alt" [href]="whatsAppLink" target="_blank" rel="noopener">Contact on WhatsApp ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH STACK & PROFICIENCY -->
     <section id="skills" class="skills section">
       <div class="section-heading">
         <div>
           <span class="eyebrow">Production Toolkit</span>
-          <h2>My <em>Tech Stack</em></h2>
+          <h2>Engineered with <em>Modern Technologies</em></h2>
         </div>
       </div>
       <div class="skills-layout">
         <div class="skill-grid">
-          <article *ngFor="let skill of skillCards" class="skill-card">
-            <img class="skill-icon" [src]="skill.icon" [alt]="skill.name + ' logo'">
+          <article *ngFor="let skill of skillCards" class="skill-card glass-card">
+            <img class="skill-icon" [src]="skill.icon" [alt]="skill.name + ' logo'" loading="lazy">
             <span>{{ skill.name }}</span>
           </article>
         </div>
-        <aside class="expertise">
+        <aside class="expertise glass-card">
           <span class="eyebrow">Engineering Mastery</span>
           <div class="meter" *ngFor="let item of expertiseList">
             <div>
@@ -273,12 +517,12 @@ import { projects, skills } from './portfolio.data';
       </div>
     </section>
 
-    <!-- CONTACT SECTION WITH DIRECT WHATSAPP & EMAIL CHANNELS -->
-    <section class="contact section home-contact">
+    <!-- CONTACT SECTION WITH DIRECT CHANNELS -->
+    <section class="contact section home-contact glass-panel">
       <div class="contact-copy">
         <span class="eyebrow available"><i></i> Available for work</span>
         <h2>Let's Build Something <em>Remarkable Together</em></h2>
-        <p>I'm always open to discussing new engineering projects, contract roles, or full-time opportunities.</p>
+        <p>I am actively open to discussing enterprise engineering opportunities, contract projects, and high-impact full-time roles.</p>
         
         <a class="contact-channel-item" [href]="gmailDirectLink" target="_blank" rel="noopener">
           <svg class="channel-icon gmail-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -299,7 +543,7 @@ import { projects, skills } from './portfolio.data';
 
         <span class="contact-channel-item" style="cursor: default;">
           <span style="font-size: 15px; margin-right: 6px;">📍</span>
-          <span>Lahore, Pakistan (Open to Remote / Relocation)</span>
+          <span>Lahore, Pakistan (Open to Global Remote)</span>
         </span>
       </div>
 
@@ -308,19 +552,13 @@ import { projects, skills } from './portfolio.data';
           <p><strong>Your message is ready!</strong> Click below to dispatch via Email or WhatsApp:</p>
           <div class="send-options" style="margin-top: 14px;">
             <button type="button" class="primary action-send-btn" (click)="openEmail()">
-              <svg class="btn-channel-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="#fff" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-              </svg>
-              <span>Send via Email</span>
+              <span>Send via Gmail</span>
             </button>
             <a class="secondary action-send-btn" [href]="whatsAppLink" target="_blank" rel="noopener">
-              <svg class="btn-channel-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="#25D366" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.79 14.16c-.24.68-1.2 1.25-1.72 1.33-.49.07-1.12.1-3.23-.77-2.69-1.11-4.44-3.83-4.57-4-.14-.18-1.09-1.45-1.09-2.77 0-1.31.69-1.96.93-2.22.25-.26.54-.33.72-.33.18 0 .36 0 .52.01.17.01.4-.06.62.48.24.57.81 1.98.88 2.13.07.14.12.31.02.5-.09.19-.14.3-.29.47-.14.17-.3.38-.43.51-.14.14-.29.3-.12.59.16.29.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.28 1.4.29.14.46.12.63-.07.17-.19.73-.85.92-1.14.19-.29.39-.24.65-.14.26.1.1.66 1.66 1.43.56.27.93.41 1.07.63.14.22.14.85-.1 1.53z"/>
-              </svg>
               <span>Send via WhatsApp</span>
             </a>
           </div>
-          <button type="button" class="text-link" style="margin-top: 12px; display: inline-block; background:none; border:none; color:#78a9ff; cursor:pointer;" (click)="resetForm()">Send another message</button>
+          <button type="button" class="text-link" style="margin-top: 12px; display: inline-block; background:none; border:none; color:#38bdf8; cursor:pointer;" (click)="resetForm()">Send another message</button>
         </div>
 
         <ng-container *ngIf="!submitted">
@@ -328,8 +566,8 @@ import { projects, skills } from './portfolio.data';
             <input name="name" [(ngModel)]="form.name" required placeholder="Your name">
             <input name="email" [(ngModel)]="form.email" required email placeholder="Your email">
           </div>
-          <textarea name="message" [(ngModel)]="form.message" required placeholder="Your message or project scope"></textarea>
-          <button class="primary" type="submit" [disabled]="!form.name || !form.email || !form.message">Send Message <span>→</span></button>
+          <textarea name="message" [(ngModel)]="form.message" required placeholder="Tell me about your project, timeline, or engineering opportunity..."></textarea>
+          <button class="primary glow-btn" type="submit" [disabled]="!form.name || !form.email || !form.message">Send Message <span>→</span></button>
           <p class="form-error" *ngIf="quickForm.submitted && (!form.name || !form.email || !form.message)">Please fill in your name, valid email and message.</p>
         </ng-container>
       </form>
@@ -337,19 +575,40 @@ import { projects, skills } from './portfolio.data';
       <div class="contact-map">
         <div class="map-grid"></div>
         <div>
-          <span class="eyebrow">Let's Connect</span>
-          <p>Building high-performance software with clarity & care.</p>
+          <span class="eyebrow">Connect Directly</span>
+          <p>High-reliability software with speed and precision.</p>
         </div>
       </div>
     </section>
   `
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('threeCanvas') threeCanvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('personaCard') personaCardRef!: ElementRef<HTMLDivElement>;
+
   projects = projects;
   skills = skills;
   submitted = false;
   form = { name: '', email: '', message: '' };
   activeArchTab: 'frontend' | 'backend' | 'database' = 'frontend';
+  activePersona: 'developer' | 'executive' = 'developer';
+  reelPlaying = true;
+
+  // 3D Card Tilt State
+  cardTransform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  cardGlare = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%)';
+
+  // Three.js State
+  private scene!: THREE.Scene;
+  private camera!: THREE.PerspectiveCamera;
+  private renderer!: THREE.WebGLRenderer;
+  private animId: number = 0;
+  private sphereMesh!: THREE.Mesh;
+  private particlesMesh!: THREE.Points;
+  private mouseX: number = 0;
+  private mouseY: number = 0;
+  private targetX: number = 0;
+  private targetY: number = 0;
 
   // Dynamic Typewriter Effect for Hero Headline
   roles: string[] = [
@@ -375,29 +634,244 @@ export class HomeComponent implements OnInit, OnDestroy {
     { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg' }
   ];
 
-  skillCards = this.marqueeTech.concat([
+  fullMarquee = [
+    ...this.marqueeTech,
     { name: 'PrimeNG', icon: 'https://cdn.simpleicons.org/primeng/3B82F6' },
-    { name: 'ABP Framework', icon: 'https://cdn.simpleicons.org/dotnet/8B5CF6' }
-  ]);
+    { name: 'ABP Framework', icon: 'https://cdn.simpleicons.org/dotnet/8B5CF6' },
+    { name: 'Three.js 3D', icon: 'https://cdn.simpleicons.org/threedotjs/ffffff' },
+    { name: 'GSAP Motion', icon: 'https://cdn.simpleicons.org/greensock/88CE02' },
+    { name: 'Vercel Edge', icon: 'https://cdn.simpleicons.org/vercel/ffffff' },
+    { name: 'Netlify Cloud', icon: 'https://cdn.simpleicons.org/netlify/00C7B7' }
+  ];
+
+  skillCards = [
+    ...this.marqueeTech,
+    { name: 'PrimeNG', icon: 'https://cdn.simpleicons.org/primeng/3B82F6' },
+    { name: 'ABP Framework', icon: 'https://cdn.simpleicons.org/dotnet/8B5CF6' },
+    { name: 'Three.js 3D', icon: 'https://cdn.simpleicons.org/threedotjs/ffffff' },
+    { name: 'GSAP Motion', icon: 'https://cdn.simpleicons.org/greensock/88CE02' }
+  ];
 
   expertiseList = [
-    { label: 'Frontend Architecture (Angular 19 & Signals)', percentage: '94%' },
-    { label: 'Backend Engineering (ASP.NET Core & C#)', percentage: '92%' },
-    { label: 'Database Design & EF Core (SQL Server)', percentage: '88%' },
-    { label: 'Real-Time Services (SignalR & WebSockets)', percentage: '86%' },
-    { label: 'Modular Multi-Tenancy (ABP Framework & RBAC)', percentage: '85%' }
+    { label: 'Frontend Architecture (Angular 19 & Signals)', percentage: '95%' },
+    { label: 'Backend Engineering (ASP.NET Core & C#)', percentage: '93%' },
+    { label: 'Database Design & EF Core (SQL Server)', percentage: '90%' },
+    { label: 'Real-Time Services (SignalR & WebSockets)', percentage: '88%' },
+    { label: 'Multi-Tenant Architecture (ABP Framework & RBAC)', percentage: '87%' }
+  ];
+
+  // Simulated GitHub Commit Grid (28 cells with activity classes)
+  commitCells = [
+    'c-1', 'c-2', 'c-3', 'c-2', 'c-4', 'c-3', 'c-4',
+    'c-2', 'c-4', 'c-3', 'c-4', 'c-2', 'c-3', 'c-4',
+    'c-3', 'c-2', 'c-4', 'c-4', 'c-3', 'c-4', 'c-2',
+    'c-4', 'c-3', 'c-4', 'c-2', 'c-4', 'c-3', 'c-4'
   ];
 
   ngOnInit() {
     this.startTypewriter();
   }
 
+  ngAfterViewInit() {
+    this.initThreeJS();
+    this.initGSAPAnimations();
+  }
+
   ngOnDestroy() {
     if (this.typewriterTimer) {
       clearTimeout(this.typewriterTimer);
     }
+    if (this.animId) {
+      cancelAnimationFrame(this.animId);
+    }
+    if (this.renderer) {
+      this.renderer.dispose();
+    }
   }
 
+  /* -------------------------------------------------------------------------- */
+  /* THREE.JS 3D INTERACTIVE WEBGL SCENE                                        */
+  /* -------------------------------------------------------------------------- */
+  private initThreeJS() {
+    if (!this.threeCanvasRef) return;
+    const canvas = this.threeCanvasRef.nativeElement;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(55, width / height, 0.1, 1000);
+    this.camera.position.z = 24;
+
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      alpha: true,
+      antialias: true
+    });
+    this.renderer.setSize(width, height);
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // 1. Floating Icosahedron Wireframe Core
+    const sphereGeo = new THREE.IcosahedronGeometry(7, 2);
+    const sphereMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.12
+    });
+    this.sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
+    this.sphereMesh.position.set(7, -1, 0);
+    this.scene.add(this.sphereMesh);
+
+    // 2. Interactive Constellation Particles
+    const particleCount = 750;
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    const colorCyan = new THREE.Color(0x38bdf8);
+    const colorViolet = new THREE.Color(0xa855f7);
+
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      positions[i] = (Math.random() - 0.5) * 60;
+      positions[i + 1] = (Math.random() - 0.5) * 45;
+      positions[i + 2] = (Math.random() - 0.5) * 40;
+
+      const mixed = Math.random() > 0.5 ? colorCyan : colorViolet;
+      colors[i] = mixed.r;
+      colors[i + 1] = mixed.g;
+      colors[i + 2] = mixed.b;
+    }
+
+    const particleGeo = new THREE.BufferGeometry();
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const particleMat = new THREE.PointsMaterial({
+      size: 0.22,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.65
+    });
+
+    this.particlesMesh = new THREE.Points(particleGeo, particleMat);
+    this.scene.add(this.particlesMesh);
+
+    // Start render loop
+    this.renderThreeLoop();
+  }
+
+  private renderThreeLoop = () => {
+    this.animId = requestAnimationFrame(this.renderThreeLoop);
+
+    // Smooth lerp mouse response
+    this.targetX += (this.mouseX - this.targetX) * 0.05;
+    this.targetY += (this.mouseY - this.targetY) * 0.05;
+
+    if (this.sphereMesh) {
+      this.sphereMesh.rotation.y += 0.0025;
+      this.sphereMesh.rotation.x += 0.0015;
+      this.sphereMesh.rotation.x += this.targetY * 0.0005;
+      this.sphereMesh.rotation.y += this.targetX * 0.0005;
+    }
+
+    if (this.particlesMesh) {
+      this.particlesMesh.rotation.y -= 0.0008;
+      this.particlesMesh.position.x = this.targetX * 0.8;
+      this.particlesMesh.position.y = -this.targetY * 0.8;
+    }
+
+    this.renderer.render(this.scene, this.camera);
+  };
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    if (!this.renderer || !this.camera) return;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(width, height);
+  }
+
+  @HostListener('window:mousemove', ['$event'])
+  onWindowMouseMove(e: MouseEvent) {
+    this.mouseX = (e.clientX - window.innerWidth / 2) * 0.002;
+    this.mouseY = (e.clientY - window.innerHeight / 2) * 0.002;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* 3D CARD PERSPECTIVE TILT                                                   */
+  /* -------------------------------------------------------------------------- */
+  onCardMouseMove(e: MouseEvent) {
+    if (!this.personaCardRef) return;
+    const card = this.personaCardRef.nativeElement;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -12;
+    const rotateY = ((x - centerX) / centerX) * 12;
+
+    this.cardTransform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    const glareX = (x / rect.width) * 100;
+    const glareY = (y / rect.height) * 100;
+    this.cardGlare = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.2) 0%, transparent 60%)`;
+  }
+
+  onCardMouseLeave() {
+    this.cardTransform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    this.cardGlare = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 60%)';
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* GSAP SCROLL & ENTRANCE ANIMATIONS                                          */
+  /* -------------------------------------------------------------------------- */
+  private initGSAPAnimations() {
+    // Staggered hero reveal
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.85 } });
+    heroTl
+      .from('.eyebrow-row', { opacity: 0, y: -20, delay: 0.1 })
+      .from('.mini-name', { opacity: 0, y: 15 }, '-=0.6')
+      .from('.hero-heading', { opacity: 0, y: 25 }, '-=0.5')
+      .from('.lead', { opacity: 0, y: 20 }, '-=0.5')
+      .from('.hero-buttons', { opacity: 0, y: 20 }, '-=0.5')
+      .from('.stats div', { opacity: 0, y: 20, stagger: 0.12 }, '-=0.5')
+      .from('.hero-visual', { opacity: 0, scale: 0.95 }, '-=0.7');
+
+    // ScrollTrigger reveals on Bento Cards
+    gsap.utils.toArray('.bento-card').forEach((card: any, index: number) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%'
+        },
+        opacity: 0,
+        y: 35,
+        duration: 0.75,
+        delay: index * 0.12,
+        ease: 'power2.out'
+      });
+    });
+
+    // ScrollTrigger reveals on Project Cards
+    gsap.utils.toArray('.project-card').forEach((card: any, index: number) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 88%'
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.7,
+        delay: (index % 2) * 0.15,
+        ease: 'power2.out'
+      });
+    });
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* TYPEWRITER HEADLINE LOGIC                                                  */
+  /* -------------------------------------------------------------------------- */
   startTypewriter() {
     const current = this.roles[this.roleIndex];
     if (this.isDeleting) {
@@ -411,7 +885,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     let speed = this.isDeleting ? 30 : 65;
 
     if (!this.isDeleting && this.charIndex === current.length) {
-      speed = 2200; // Pause at end of text
+      speed = 2200;
       this.isDeleting = true;
     } else if (this.isDeleting && this.charIndex === 0) {
       this.isDeleting = false;
@@ -422,22 +896,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.typewriterTimer = setTimeout(() => this.startTypewriter(), speed);
   }
 
+  toggleReelPlay() {
+    this.reelPlaying = !this.reelPlaying;
+  }
+
   get gmailDirectLink(): string {
     return 'https://mail.google.com/mail/?view=cm&fs=1&to=mughalnouman678@gmail.com';
   }
 
-  get emailLink(): string {
-    return `mailto:mughalnouman678@gmail.com?subject=${encodeURIComponent('Portfolio Inquiry from ' + this.form.name)}&body=${encodeURIComponent(`Hello Nouman,\n\nI am ${this.form.name} (${this.form.email}).\n\n${this.form.message}`)}`;
-  }
-
   get whatsAppLink(): string {
-    return `https://wa.me/923214940440?text=${encodeURIComponent(`Hello Nouman, I reached out via your portfolio.\nName: ${this.form.name}\nEmail: ${this.form.email}\n\nMessage: ${this.form.message}`)}`;
+    return `https://wa.me/923214940440?text=${encodeURIComponent(
+      `Hello Nouman, I reviewed your portfolio and would like to discuss an engineering opportunity with you.\nName: ${this.form.name || 'Visitor'}\nMessage: ${this.form.message || ''}`
+    )}`;
   }
 
   openEmail() {
-    const subject = encodeURIComponent('Portfolio inquiry from ' + (this.form.name || 'Visitor'));
+    const subject = encodeURIComponent('Portfolio Inquiry from ' + (this.form.name || 'Visitor'));
     const body = encodeURIComponent(`Hello Nouman,\n\nI am ${this.form.name} (${this.form.email}).\n\n${this.form.message}`);
-    // Open Gmail web client with pre-filled fields
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=mughalnouman678@gmail.com&su=${subject}&body=${body}`;
     window.open(gmailUrl, '_blank', 'noopener,noreferrer');
   }
