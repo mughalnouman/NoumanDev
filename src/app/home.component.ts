@@ -69,8 +69,8 @@ if (typeof window !== 'undefined') {
         </div>
 
         <div class="stats">
-          <div><b>2+</b><span>Years Production Exp</span></div>
-          <div><b>10+</b><span>Deployments Built</span></div>
+          <div><b>2</b><span>Years Production Exp</span></div>
+          <div><b>5+</b><span>Deployments Built</span></div>
           <div><b>99.9%</b><span>Architecture Uptime</span></div>
         </div>
       </div>
@@ -485,14 +485,14 @@ if (typeof window !== 'undefined') {
         <span class="eyebrow">Engineering Leadership</span>
         <h2>Building Resilient Products with <em>Clarity, Velocity & Care</em></h2>
         <p>
-          I am a Full Stack Developer with 2+ years of hands-on production experience architecting enterprise applications with Angular 19 and ASP.NET Core across multi-tenant CRM, inventory ERP, and accounting platforms.
+          I am a Full Stack Developer with 2 years of hands-on production experience architecting enterprise applications with Angular 19 and ASP.NET Core across multi-tenant CRM, inventory ERP, and accounting platforms.
         </p>
         <p>
           My engineering methodology focuses on clean modular boundaries, decoupled service architecture, automated data pipelines, and responsive, accessible user interfaces that leave a lasting impression.
         </p>
         <div class="about-metrics">
-          <div><b>2+</b><span>Years Production Exp</span></div>
-          <div><b>10+</b><span>Projects Completed</span></div>
+          <div><b>2</b><span>Years Production Exp</span></div>
+          <div><b>5+</b><span>Projects Completed</span></div>
           <div><b>100%</b><span>Client & Delivery Focus</span></div>
         </div>
         <div class="about-actions">

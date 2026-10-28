@@ -423,11 +423,11 @@ import { experience, projects, skills, Project } from './portfolio.data';
 
               <div class="profile-stats-bar">
                 <div class="p-stat">
-                  <b>2+ Yrs</b>
+                  <b>2 Yrs</b>
                   <span>Production Exp</span>
                 </div>
                 <div class="p-stat">
-                  <b>10+</b>
+                  <b>5+</b>
                   <span>Deployed Systems</span>
                 </div>
                 <div class="p-stat">

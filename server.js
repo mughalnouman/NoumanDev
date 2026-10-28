@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 });
 
 const portfolioKnowledge = `
-Nouman Ahmad is a Full Stack Engineer based in Lahore, Pakistan. He has 2+ years of professional experience building secure, scalable, and high-performance enterprise web applications.
+Nouman Ahmad is a Full Stack Engineer based in Lahore, Pakistan. He has 2 years of professional experience building secure, scalable, and high-performance enterprise web applications.
 
 Core Skills & Technical Toolkit:
 - Frontend: Angular (v14-v19), TypeScript, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, Bootstrap, PrimeNG.

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewEncapsulation } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { PortfolioChatComponent } from './portfolio-chat.component';
@@ -22,6 +22,22 @@ export class AppComponent implements OnInit, OnDestroy {
     ['Skills', '/skills'],
     ['Contact', '/contact']
   ];
+
+  // Back to top scroll state
+  showBackToTop = false;
+
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    if (typeof window !== 'undefined') {
+      this.showBackToTop = window.scrollY > 300;
+    }
+  }
+
+  scrollToTop() {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
 
   // 1. Initial Page Load Architectural Preloader
   isPreloaderVisible = true;

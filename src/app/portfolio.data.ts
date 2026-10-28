@@ -28,11 +28,7 @@ export const projects: Project[] = [
     image: 'assets/images/easinventory/easinventory.JPG',
     gallery: [
       'assets/images/easinventory/easinventory.JPG',
-      'assets/images/easinventory/login.png',
-      'assets/images/easinventory/dashboard.png',
-      'assets/images/easinventory/item-groups.png',
-      'assets/images/easinventory/item-master.png',
-      'assets/images/easinventory/transaction.png'
+      'assets/images/easinventory/login.png'
     ],
     tags: ['Angular', '.NET Core', 'SQL Server'],
     status: 'Completed',
