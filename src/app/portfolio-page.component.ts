@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -20,14 +20,27 @@ import { experience, projects, skills, Project } from './portfolio.data';
         <div class="about">
           <div class="about-photo glass-card">
             <img src="assets/images/nouman-executive.jpg" alt="Portrait of Nouman Ahmad">
-            <div class="portrait-social">
-              <a href="https://linkedin.com/in/nouman-ahmad-59022942a" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
-              <a href="https://github.com/mughalnouman" target="_blank" rel="noopener" aria-label="GitHub">
-                <svg viewBox="0 0 16 16" aria-hidden="true">
-                  <path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.5c-2.23.49-2.7-.95-2.7-.95-.36-.93-.9-1.18-.9-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.22 1.87.87 2.32.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.96 0-.88.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.21 2.2.82A7.67 7.67 0 0 1 8 4.8c.68 0 1.36.09 2 .27 1.53-1.03 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.27.82 2.15 0 3.08-1.87 3.76-3.65 3.96.29.25.54.73.54 1.47v2.18c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/>
+            <div class="portrait-social" aria-label="Social and Direct Contact Profiles">
+              <a class="portrait-social-btn btn-linkedin" href="https://linkedin.com/in/nouman-ahmad-59022942a" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" title="LinkedIn Profile">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.68 1.68 0 1 0 0-3.36 1.68 1.68 0 0 0 0 3.36m1.39 9.74v-8.37H5.07v8.37h2.78z"/>
                 </svg>
               </a>
-              <a href="mailto:mughalnouman678@gmail.com" aria-label="Email">&#9993;</a>
+              <a class="portrait-social-btn btn-github" href="https://github.com/mughalnouman" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" title="GitHub Profile">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+                </svg>
+              </a>
+              <a class="portrait-social-btn btn-whatsapp" href="https://wa.me/923214940440" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Chat" title="Chat on WhatsApp">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.79 14.16c-.24.68-1.2 1.25-1.72 1.33-.49.07-1.12.1-3.23-.77-2.69-1.11-4.44-3.83-4.57-4-.14-.18-1.09-1.45-1.09-2.77 0-1.31.69-1.96.93-2.22.25-.26.54-.33.72-.33.18 0 .36 0 .52.01.17.01.4-.06.62.48.24.57.81 1.98.88 2.13.07.14.12.31.02.5-.09.19-.14.3-.29.47-.14.17-.3.38-.43.51-.14.14-.29.3-.12.59.16.29.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.28 1.4.29.14.46.12.63-.07.17-.19.73-.85.92-1.14.19-.29.39-.24.65-.14.26.1.1.66 1.66 1.43.56.27.93.41 1.07.63.14.22.14.85-.1 1.53z"/>
+                </svg>
+              </a>
+              <a class="portrait-social-btn btn-email" [href]="gmailDirectLink" target="_blank" rel="noopener noreferrer" aria-label="Email via Gmail" title="Send Email via Gmail">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+              </a>
             </div>
           </div>
           <div class="about-copy glass-card">
@@ -36,10 +49,11 @@ import { experience, projects, skills, Project } from './portfolio.data';
               I architect maintainable, high-throughput web applications across multi-tenant CRM, inventory ERP, and accounting management.
               My work merges reactive Angular 19 frontends with secure ASP.NET Core & ABP Framework APIs, SignalR real-time communications, and optimized SQL Server backbones.
             </p>
-            <div class="feature-list tech-pills">
-              <span *ngFor="let skill of skills">
-                <img [src]="techIcon(skill)" [alt]="skill + ' logo'" loading="lazy">{{ skill }}
-              </span>
+            <div class="about-skills-badges">
+              <div *ngFor="let skill of skills" class="about-skill-pill">
+                <img class="skill-mini-icon" [src]="techIcon(skill)" [alt]="skill + ' logo'" loading="lazy">
+                <span>{{ skill }}</span>
+              </div>
             </div>
             <div class="about-actions" style="margin-top: 24px;">
               <a class="primary" href="assets/documents/NoumanAhmad_FullStack.pdf" download>Download CV (PDF) →</a>
@@ -89,6 +103,7 @@ import { experience, projects, skills, Project } from './portfolio.data';
         </div>
         <section class="skill-principles glass-panel">
           <span>✓ Modern Angular 19 & Signal Architecture</span>
+          <span>✓ Generative AI & Conversational Agents (Gemini & OpenAI)</span>
           <span>✓ Secure JWT & Granular RBAC Permissions</span>
           <span>✓ Clean Architecture, SOLID & CQRS</span>
           <span>✓ Real-time SignalR WebSockets</span>
@@ -106,7 +121,7 @@ import { experience, projects, skills, Project } from './portfolio.data';
           <article class="project-card glass-card" *ngFor="let project of projects">
             <div class="project-image">
               <img [src]="project.image" [alt]="project.title + ' screenshot'" loading="lazy">
-              <span class="status">{{ project.status }}</span>
+              <span class="status" [ngClass]="project.status === 'In production' ? 'status-production' : 'status-completed'">{{ project.status }}</span>
             </div>
             <div class="project-content">
               <p class="project-type">{{ project.type }}</p>
@@ -124,45 +139,248 @@ import { experience, projects, skills, Project } from './portfolio.data';
         </div>
       </section>
 
-      <!-- CASE STUDY PAGE -->
+      <!-- ULTRA-IMMERSIVE CASE STUDY SHOWCASE (Inspired by Mobbin, Motion Primitives & Haiki) -->
       <ng-container *ngSwitchCase="'case-study'">
-        <section class="page section" *ngIf="project">
-          <a routerLink="/projects" class="back-link">← All projects</a>
-          <div class="case-hero glass-panel">
-            <div>
-              <span class="eyebrow">{{ project.type }}</span>
-              <h1>{{ project.title }}</h1>
-              <p>{{ project.overview }}</p>
-              <div class="tags">
-                <span *ngFor="let tag of project.tags">{{ tag }}</span>
-              </div>
-              <a *ngIf="project.live" class="primary" [href]="project.live" target="_blank" rel="noopener" style="display:inline-flex; margin-top:20px;">Visit Live Project ↗</a>
+        <section class="case-study-showcase" *ngIf="project">
+          <!-- TOP NAVIGATION / BREADCRUMB BAR -->
+          <div class="case-topbar glass-card">
+            <a routerLink="/projects" class="case-back-btn">
+              <span class="back-arrow">←</span>
+              <span>All Projects</span>
+            </a>
+            <div class="case-breadcrumbs">
+              <span class="crumb-type">{{ project.type }}</span>
+              <span class="crumb-divider">/</span>
+              <span class="crumb-current">{{ project.title }}</span>
             </div>
-            <button class="case-cover" (click)="selectedImage = project.image" type="button">
-              <img [src]="project.image" [alt]="project.title + ' overview'">
-              <span>Click to expand ⤢</span>
-            </button>
+            <div class="case-top-actions">
+              <a *ngIf="project.live" [href]="project.live" target="_blank" rel="noopener" class="live-pill-btn">
+                <span class="live-dot pulse-dot"></span>
+                <span>Open Live Project</span>
+                <span class="external-icon">↗</span>
+              </a>
+            </div>
           </div>
-          <div class="case-layout">
-            <article class="glass-card">
-              <span class="eyebrow">The System</span>
-              <h2>Solution Architecture</h2>
-              <p>{{ project.overview }}</p>
-              <span class="eyebrow" style="margin-top:22px;">Key Engineering Features</span>
-              <ul class="feature-list">
-                <li *ngFor="let feature of project.features">{{ feature }}</li>
-              </ul>
-            </article>
-            <div class="case-gallery">
-              <button *ngFor="let image of project.gallery" (click)="selectedImage = image" type="button" class="glass-card">
-                <img [src]="image" [alt]="project.title + ' interface screenshot'" loading="lazy">
+
+          <!-- HERO SECTION WITH 3D PERSPECTIVE MOCKUP & SYSTEM STATS -->
+          <div class="case-hero-stage glass-panel">
+            <div class="case-hero-glow"></div>
+            <div class="case-hero-grid">
+              <div class="case-hero-info">
+                <div class="badge-row">
+                  <span class="eyebrow-chip">{{ project.type }}</span>
+                  <span class="status-chip" [ngClass]="project.status === 'In production' ? 'chip-production' : 'chip-completed'">
+                    <span class="chip-dot"></span>
+                    {{ project.status }}
+                  </span>
+                </div>
+                <h1 class="case-hero-title">{{ project.title }}</h1>
+                <p class="case-hero-desc">{{ project.overview }}</p>
+
+                <!-- QUICK METRICS / SPECS -->
+                <div class="case-stats-ribbon">
+                  <div class="stat-box">
+                    <span class="stat-label">Architecture</span>
+                    <strong class="stat-val">Enterprise SPA</strong>
+                  </div>
+                  <div class="stat-box">
+                    <span class="stat-label">Screen Views</span>
+                    <strong class="stat-val">{{ project.gallery.length }} Modals / Views</strong>
+                  </div>
+                  <div class="stat-box">
+                    <span class="stat-label">Data Sync</span>
+                    <strong class="stat-val">Real-time / REST</strong>
+                  </div>
+                </div>
+
+                <div class="tech-stack-row">
+                  <span class="stack-badge" *ngFor="let tag of project.tags">{{ tag }}</span>
+                </div>
+              </div>
+
+              <!-- 3D INTERACTIVE HERO STAGE -->
+              <div class="hero-screen-stage" (mousemove)="onHeroMouseMove($event)" (mouseleave)="onHeroMouseLeave()">
+                <div class="mockup-frame-3d" [style.transform]="heroTransform">
+                  <div class="mockup-header-bar">
+                    <div class="mac-controls">
+                      <span class="mac-dot dot-red"></span>
+                      <span class="mac-dot dot-yellow"></span>
+                      <span class="mac-dot dot-green"></span>
+                    </div>
+                    <div class="mockup-url-bar">
+                      <span class="lock-icon">🔒</span>
+                      <span class="mock-url">{{ project.live || 'https://' + project.slug + '.cloud-platform.internal' }}</span>
+                    </div>
+                    <div class="mockup-actions">
+                      <button (click)="openLightbox(activeScreenIndex)" class="expand-action" title="Expand View">⤢</button>
+                    </div>
+                  </div>
+                  <div class="mockup-viewport" (click)="openLightbox(activeScreenIndex)">
+                    <img [src]="project.gallery[activeScreenIndex] || project.image" [alt]="project.title + ' view'" class="mockup-img">
+                    <div class="mockup-overlay">
+                      <span class="view-pill">🔍 Click to inspect high-res</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- INTERACTIVE MULTI-VIEW SCREEN NAVIGATOR (Mobbin style tab switcher) -->
+          <div class="screens-navigator-panel glass-card" *ngIf="project.gallery && project.gallery.length > 1">
+            <div class="nav-panel-header">
+              <div>
+                <span class="eyebrow">Interactive View Explorer</span>
+                <h3>System Interfaces & Workflows</h3>
+              </div>
+              <div class="nav-controls-hint">
+                <span>Select a view to inspect</span>
+              </div>
+            </div>
+
+            <!-- TAB PILLS -->
+            <div class="screen-tabs-list">
+              <button 
+                *ngFor="let img of project.gallery; let i = index" 
+                class="screen-tab-btn" 
+                [class.active]="activeScreenIndex === i"
+                (click)="setActiveScreen(i)">
+                <span class="tab-index">0{{ i + 1 }}</span>
+                <span class="tab-title">{{ getScreenTitle(i, project.slug) }}</span>
               </button>
             </div>
           </div>
+
+          <!-- SPLIT STICKY PRESENTATION SHOWCASE (Mobbin & Haiki Style) -->
+          <div class="showcase-split-container">
+            <!-- LEFT: ENGINEERING ARCHITECTURE & KEY FEATURES (Scrollable) -->
+            <div class="showcase-content-column">
+              <!-- ARCHITECTURE CARD -->
+              <div class="glass-card feature-showcase-card">
+                <div class="card-icon-badge">⚡</div>
+                <span class="eyebrow">Engineering Blueprint</span>
+                <h2>Solution Architecture</h2>
+                <p>{{ project.overview }}</p>
+                <div class="arch-bullets">
+                  <div class="arch-bullet-item" *ngFor="let feature of project.features; let fIndex = index">
+                    <div class="bullet-number">0{{ fIndex + 1 }}</div>
+                    <div class="bullet-text">
+                      <strong>{{ getFeatureHeading(feature) }}</strong>
+                      <p>{{ getFeatureDetail(feature) }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CAPABILITIES & DATA FLOW -->
+              <div class="glass-card capability-card">
+                <span class="eyebrow">Design Systems & Ergonomics</span>
+                <h3>Optimized for High-Throughput Operators</h3>
+                <p>
+                  Built with responsive data grids, instant filter search, keyboard shortcuts, and dynamic currency conversions to eliminate operational friction and accelerate daily workflows.
+                </p>
+                <div class="capabilities-grid">
+                  <div class="cap-box">
+                    <span class="cap-metric">&lt; 150ms</span>
+                    <span class="cap-desc">Client Interaction Latency</span>
+                  </div>
+                  <div class="cap-box">
+                    <span class="cap-metric">100%</span>
+                    <span class="cap-desc">Responsive Cross-Device</span>
+                  </div>
+                  <div class="cap-box">
+                    <span class="cap-metric">Real-time</span>
+                    <span class="cap-desc">Data Pipelines & WebSockets</span>
+                  </div>
+                  <div class="cap-box">
+                    <span class="cap-metric">Enterprise</span>
+                    <span class="cap-desc">Security & Data Auditability</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: STICKY CINEMATIC VIEWPORT (Changes with Active Screen or Scroll) -->
+            <div class="showcase-sticky-column">
+              <div class="sticky-viewport-card glass-card">
+                <div class="viewport-header">
+                  <div class="current-screen-info">
+                    <span class="screen-step-tag">VIEW {{ activeScreenIndex + 1 }} OF {{ project.gallery.length }}</span>
+                    <h4 class="screen-step-title">{{ getScreenTitle(activeScreenIndex, project.slug) }}</h4>
+                  </div>
+                  <div class="screen-pager">
+                    <button class="pager-btn" (click)="prevScreen()" [disabled]="activeScreenIndex === 0">‹</button>
+                    <span class="pager-text">{{ activeScreenIndex + 1 }} / {{ project.gallery.length }}</span>
+                    <button class="pager-btn" (click)="nextScreen()" [disabled]="activeScreenIndex === project.gallery.length - 1">›</button>
+                  </div>
+                </div>
+
+                <div class="sticky-image-wrap" (click)="openLightbox(activeScreenIndex)">
+                  <img [src]="project.gallery[activeScreenIndex] || project.image" [alt]="project.title + ' screen'" class="sticky-screen-img">
+                  <div class="hover-inspect-badge">
+                    <span>Click to Open Lightbox ⤢</span>
+                  </div>
+                </div>
+
+                <!-- MINI THUMBNAIL STRIP -->
+                <div class="thumb-strip">
+                  <button 
+                    *ngFor="let img of project.gallery; let tIndex = index"
+                    class="thumb-btn"
+                    [class.active]="activeScreenIndex === tIndex"
+                    (click)="setActiveScreen(tIndex)">
+                    <img [src]="img" [alt]="'Thumbnail ' + (tIndex + 1)">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FULL-BLEED INTERACTIVE GALLERY GRID (All Screens in High Resolution) -->
+          <div class="deep-dive-gallery-section">
+            <div class="section-heading-row">
+              <div>
+                <span class="eyebrow">Comprehensive Deep Dive</span>
+                <h2>All Production Interfaces</h2>
+                <p>High-resolution captures of the live user flows, analytical dashboards, and enterprise modules.</p>
+              </div>
+            </div>
+
+            <div class="deep-dive-grid">
+              <div 
+                *ngFor="let image of project.gallery; let gIndex = index" 
+                class="deep-dive-card glass-card"
+                (click)="openLightbox(gIndex)">
+                <div class="card-browser-bar">
+                  <div class="browser-dots">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <span class="browser-title">{{ getScreenTitle(gIndex, project.slug) }}</span>
+                  <span class="zoom-icon">🔍</span>
+                </div>
+                <div class="card-image-box">
+                  <img [src]="image" [alt]="project.title + ' interface ' + (gIndex + 1)" loading="lazy">
+                </div>
+                <div class="card-footer-info">
+                  <span class="view-num">0{{ gIndex + 1 }}</span>
+                  <span class="view-name">{{ getScreenTitle(gIndex, project.slug) }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
-        <div class="image-lightbox" *ngIf="selectedImage" (click)="selectedImage = undefined">
-          <button class="lightbox-close" (click)="selectedImage = undefined" aria-label="Close image">×</button>
-          <img [src]="selectedImage" alt="Expanded project screenshot" (click)="$event.stopPropagation()">
+
+        <!-- IMMERSIVE LIGHTBOX WITH KEYBOARD NAVIGATION -->
+        <div class="image-lightbox" *ngIf="selectedImage" (click)="closeLightbox()">
+          <div class="lightbox-header" (click)="$event.stopPropagation()">
+            <span class="lightbox-title">{{ project?.title }} — View {{ lightboxIndex + 1 }}</span>
+            <button class="lightbox-close" (click)="closeLightbox()" aria-label="Close image">×</button>
+          </div>
+          <div class="lightbox-body" (click)="$event.stopPropagation()">
+            <button class="lightbox-nav-btn prev" (click)="lightboxPrev()" *ngIf="project && project.gallery.length > 1">‹</button>
+            <img [src]="selectedImage" alt="Expanded project screenshot">
+            <button class="lightbox-nav-btn next" (click)="lightboxNext()" *ngIf="project && project.gallery.length > 1">›</button>
+          </div>
         </div>
       </ng-container>
 
@@ -241,11 +459,8 @@ import { experience, projects, skills, Project } from './portfolio.data';
               <!-- Official Email Card -->
               <a class="method-card email-card glass-card" [href]="gmailDirectLink" target="_blank" rel="noopener">
                 <div class="method-icon-wrap gmail-icon-bg">
-                  <svg viewBox="0 0 24 24" class="w-6 h-6">
-                    <path fill="#4285F4" d="M22.5 12.25c0-.7-.06-1.37-.18-2.02H12v4.11h5.9c-.25 1.34-1 2.48-2.14 3.24v2.69h3.46c2.02-1.86 3.28-4.6 3.28-8.02z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.99 7.28-2.67l-3.46-2.69c-.99.66-2.25 1.05-3.82 1.05-2.94 0-5.43-1.98-6.32-4.66H2.08v2.77C3.89 20.41 7.67 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.68 14.03c-.23-.68-.36-1.41-.36-2.03s.13-1.35.36-2.03V7.2H2.08C1.35 8.65.94 10.28.94 12s.41 3.35 1.14 4.8l3.6-2.77z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.67 1 3.89 3.59 2.08 7.2l3.6 2.77c.89-2.68 3.38-4.59 6.32-4.59z"/>
+                  <svg viewBox="0 0 24 24" class="w-6 h-6" aria-hidden="true">
+                    <path fill="#EA4335" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                   </svg>
                 </div>
                 <div class="method-info">
@@ -261,7 +476,9 @@ import { experience, projects, skills, Project } from './portfolio.data';
               <!-- LinkedIn Profile Card -->
               <a class="method-card linkedin-card glass-card" href="https://linkedin.com/in/nouman-ahmad-59022942a" target="_blank" rel="noopener">
                 <div class="method-icon-wrap in-icon-bg">
-                  <span class="in-text">in</span>
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="#0A66C2" aria-hidden="true">
+                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.68 1.68 0 1 0 0-3.36 1.68 1.68 0 0 0 0 3.36m1.39 9.74v-8.37H5.07v8.37h2.78z"/>
+                  </svg>
                 </div>
                 <div class="method-info">
                   <div class="method-top">
@@ -276,8 +493,8 @@ import { experience, projects, skills, Project } from './portfolio.data';
               <!-- GitHub Profile Card -->
               <a class="method-card github-card glass-card" href="https://github.com/mughalnouman" target="_blank" rel="noopener">
                 <div class="method-icon-wrap gh-icon-bg">
-                  <svg viewBox="0 0 16 16" fill="#ffffff" class="w-5 h-5">
-                    <path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.5c-2.23.49-2.7-.95-2.7-.95-.36-.93-.9-1.18-.9-1.18-.72-.5.06-.49.06-.49.8.06 1.22.82 1.22.82.71 1.22 1.87.87 2.32.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.96 0-.88.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.21 2.2.82A7.67 7.67 0 0 1 8 4.8c.68 0 1.36.09 2 .27 1.53-1.03 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.27.82 2.15 0 3.08-1.87 3.76-3.65 3.96.29.25.54.73.54 1.47v2.18c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/>
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="#ffffff" class="w-5 h-5" aria-hidden="true">
+                    <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
                   </svg>
                 </div>
                 <div class="method-info">
@@ -443,6 +660,130 @@ export class PortfolioPageComponent implements OnInit {
   experience = experience;
   submitted = false;
 
+  // Case Study Showcase Interactive State (Mobbin / Motion Primitives style)
+  activeScreenIndex = 0;
+  lightboxIndex = 0;
+  heroTransform = 'perspective(1000px) rotateX(4deg) rotateY(-4deg)';
+
+  onHeroMouseMove(e: MouseEvent) {
+    const el = e.currentTarget as HTMLElement;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    const rotateX = -(y / (rect.height / 2)) * 6;
+    const rotateY = (x / (rect.width / 2)) * 6;
+    this.heroTransform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+  }
+
+  onHeroMouseLeave() {
+    this.heroTransform = 'perspective(1000px) rotateX(4deg) rotateY(-4deg)';
+  }
+
+  setActiveScreen(index: number) {
+    this.activeScreenIndex = index;
+  }
+
+  nextScreen() {
+    if (this.project?.gallery && this.activeScreenIndex < this.project.gallery.length - 1) {
+      this.activeScreenIndex++;
+    }
+  }
+
+  prevScreen() {
+    if (this.activeScreenIndex > 0) {
+      this.activeScreenIndex--;
+    }
+  }
+
+  openLightbox(index: number) {
+    if (this.project?.gallery && this.project.gallery[index]) {
+      this.lightboxIndex = index;
+      this.selectedImage = this.project.gallery[index];
+    } else if (this.project?.image) {
+      this.selectedImage = this.project.image;
+    }
+  }
+
+  closeLightbox() {
+    this.selectedImage = undefined;
+  }
+
+  lightboxNext() {
+    if (this.project?.gallery && this.project.gallery.length > 0) {
+      this.lightboxIndex = (this.lightboxIndex + 1) % this.project.gallery.length;
+      this.selectedImage = this.project.gallery[this.lightboxIndex];
+    }
+  }
+
+  lightboxPrev() {
+    if (this.project?.gallery && this.project.gallery.length > 0) {
+      this.lightboxIndex = (this.lightboxIndex - 1 + this.project.gallery.length) % this.project.gallery.length;
+      this.selectedImage = this.project.gallery[this.lightboxIndex];
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent) {
+    if (this.selectedImage) {
+      if (event.key === 'Escape') this.closeLightbox();
+      if (event.key === 'ArrowRight') this.lightboxNext();
+      if (event.key === 'ArrowLeft') this.lightboxPrev();
+    }
+  }
+
+  getScreenTitle(index: number, slug?: string): string {
+    const titles: Record<string, string[]> = {
+      'eas-sync': [
+        'Executive Financial Dashboard & Real-Time Balances',
+        'Quick Actions & Core Management Reports',
+        'Sales & Purchase Analytical Breakdown',
+        'Payables Party Ledger & Credit Summary',
+        'Receivables Party Ledger & Debit Balances'
+      ],
+      'maxout-crm': [
+        'Executive Analytics & Multi-Tenant Dashboard',
+        'Agile Board View & Sprint Workflows',
+        'Enterprise Projects & Milestone Tracking',
+        'Cross-Department Tasks & Schedule Management',
+        'Internal Team Communications & Instant Chat',
+        'Issues, Tickets & Resolution Pipeline'
+      ],
+      'aurum-ecommerce': [
+        'Bilingual Marketplace Hero & Product Discovery',
+        'Curated Memorabilia Showcase & Filtering',
+        'Product Detail & High-Res Inspection',
+        'Cart Management & Multi-Currency Checkout',
+        'Arabic RTL Localization View',
+        'Customer Checkout & Order Summary'
+      ],
+      'eas-inventory': [
+        'Executive Multi-Warehouse Inventory Dashboard',
+        'Secure Authentication & Accounting Access Portal'
+      ]
+    };
+
+    if (slug && titles[slug] && titles[slug][index]) {
+      return titles[slug][index];
+    }
+    return `Production Interface 0${index + 1}`;
+  }
+
+  getFeatureHeading(feature: string): string {
+    const parts = feature.split(' - ');
+    if (parts.length > 1) return parts[0];
+    const colon = feature.split(': ');
+    if (colon.length > 1) return colon[0];
+    return feature.split(' with ')[0] || feature;
+  }
+
+  getFeatureDetail(feature: string): string {
+    const parts = feature.split(' - ');
+    if (parts.length > 1) return parts.slice(1).join(' - ');
+    const colon = feature.split(': ');
+    if (colon.length > 1) return colon.slice(1).join(': ');
+    return feature;
+  }
+
   // Contact Studio State
   form = {
     name: '',
@@ -473,6 +814,11 @@ export class PortfolioPageComponent implements OnInit {
       'Angular': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg',
       'TypeScript': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg',
       '.NET Core': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg',
+      'SignalR & WebSockets': 'https://cdn.simpleicons.org/socketdotio/ffffff',
+      'SignalR & Web Sockets': 'https://cdn.simpleicons.org/socketdotio/ffffff',
+      'Identity & RBAC (JWT)': 'https://cdn.simpleicons.org/jsonwebtokens/F33256',
+      'AI Integration & LLMs': 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHJvbGU9ImltZyIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPgogIDxwYXRoIGZpbGw9IiMxMEEzN0YiIGQ9Ik0yMi4yODE5IDkuODIxMWE1Ljk4NDcgNS45ODQ3IDAgMCAwLS41MTU3LTQuOTEwOCA2LjA0NjIgNi4wNDYyIDAgMCAwLTYuNTA5OC0yLjlBNi4wNjUxIDYuMDY1MSAwIDAgMCA0Ljk4MDcgNC4xODE4YTUuOTg0NyA1Ljk4NDcgMCAwIDAtMy45OTc3IDIuOSA2LjA0NjIgNi4wNDYyIDAgMCAwIC43NDI3IDcuMDk2NiA1Ljk4IDUuOTggMCAwIDAgLjUxMSA0LjkxMDcgNi4wNTEgNi4wNTEgMCAwIDAgNi41MTQ2IDIuOTAwMUE1Ljk4NDcgNS45ODQ3IDAgMCAwIDEzLjI1OTkgMjRhNi4wNTU3IDYuMDU1NyAwIDAgMCA1Ljc3MTgtNC4yMDU4IDUuOTg5NCA1Ljk4OTQgMCAwIDAgMy4yNTAyLTkuOTczMXptLTkuMDIyIDEyLjU2OTRhNC40NTUyIDQuNDU1MiAwIDAgMS0yLjg2NDMtMS4wMzY1bC4xNDEzLS4wOCA0Ljc1NzctMi43NDU2YS43OTA5Ljc5MDkgMCAwIDAgLjM5MDctLjY3Nzh2LTYuNzAyMmwyLjAxMDQgMS4xNjI3Yy4yMDA4LjEwMjMuMzQwNC4yOTQ3LjM3NjMuNTE4MXY1LjU1NjJhNC40Njk3IDQuNDY5NyAwIDAgMS00LjQ3MjEgNC40NzUxem0tOS42MTc3LTQuMTA4YTQuNDUwMyA0LjQ1MDMgMCAwIDEtLjUzMjEtMy4wMDFsLjE0MTIuMDg0OCA0Ljc2MjQgMi43NDU2YS43NjcyLjc2NzIgMCAwIDAgLjc3NyAwbDUuODE4MS0zLjM1MzN2Mi4zMjE2YzAgLjIxNi0uMTE1MS40MTI0LS4zMjkzLjUyNGwtNC44MTg3IDIuNzc4OGMtMi4xNDE1IDEuMjMzOC00Ljg3MzIuNS02LjExNTYtMS42Mzk3ek0yLjE2OSA3Ljg1OWE0LjQ2MzMgNC40NjMzIDAgMCAxIDIuMzU1LTEuOTY0MnY1LjY1MTdjMCAuMzI1Ni4xNzM2LjYyNzcuNDU1Ny42NzM4bDUuNzg5OCAzLjMzOTYtMi4wMTA0IDEuMTYyN2MtLjA3NTQuMDM3LS4xNjgzLjAzNy0uMjQzNyAwTDMuODA1MiAxMy45MzljLTIuMTM3My0xLjIzODUtMi44NzAyLTMuOTY5Mi0xLjYzNjItNi4xMDh6bTE2LjUxMyAzLjgzOGwtNS44MDg3LTMuMzcxOCAyLjAxMDQtMS4xNjI3Yy4wNzU0LS4wMzcuMTY4My0uMDM3LjI0MzcgMGw0LjgwOTMgMi43Nzg4YTQuNDc0NiA0LjQ3NDYgMCAwIDEtLjY3MzcgOC4wNzIydi01LjY1MThjMC0uMzE5My0uMTY3My0uNjE0My0uNDA1Mi0uNjY0NXptMi4wMDEtMy4wMDg0bC0uMTQxMy0uMDg0OC00Ljc1My0yLjcxOTZhLjc3MjIuNzcyMiAwIDAgMC0uNzgxNyAwbC01LjgxODEgMy4zNTMzVjYuODY4YzAtLjIxNi4xMTUxLS40MTI0LjMyOTItLjUyNGw0LjgwOTMtMi43MzM3YTQuNDc4MiA0LjQ3ODIgMCAwIDEgNi42NTAyIDQuNjM2MnptLTEyLjc3NjYgMy41MzVsLTIuMDEwNC0xLjE1OGMtLjA3NTQtLjA1NjQtLjEyMTUtLjE0NTUtLjEyMTUtLjI0MzdWNC4wNDM1YTQuNDc4MiA0LjQ3ODIgMCAwIDEgNy4zNDQ0LTMuNDM2bC0uMTQxMy4wOC00Ljc1NzcgMi43NDU2YS43OTA5Ljc5MDkgMCAwIDAtLjM5MDYuNjc3OGwtLjAwNDcgNi42ODgxem0xLjA5MjQtMi4zNTU2bDIuNTg5OC0xLjQ5MTMgMi41OTQ1IDEuNDkxM3YyLjk4MjdsLTIuNTg1MSAxLjQ5MTMtMi41OTQ1LTEuNDkxMy0uMDQ3Mi0yLjk4Mjd6Ii8+Cjwvc3ZnPgo=',
+      'AI Chatbots & Agents': 'https://cdn.simpleicons.org/googlegemini/8E75B2',
       'Tailwind CSS': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',
       'SQL Server': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-original.svg',
       'PrimeNG': 'https://cdn.simpleicons.org/primeng/3B82F6',
@@ -489,6 +835,11 @@ export class PortfolioPageComponent implements OnInit {
       'Angular': 'Responsive, component-driven enterprise web applications with Angular 19 & Signals.',
       'TypeScript': 'Strongly-typed JavaScript delivering clean, scalable frontend architecture.',
       '.NET Core': 'High-throughput RESTful APIs with Clean Architecture, dependency injection & ABP.',
+      'SignalR & WebSockets': 'Real-time bi-directional messaging, SignalR hubs, live activity feeds, and WebSocket synchronization.',
+      'SignalR & Web Sockets': 'Real-time bi-directional messaging, SignalR hubs, live activity feeds, and WebSocket synchronization.',
+      'Identity & RBAC (JWT)': 'Claims-based authentication, JWT bearer token lifecycle, and fine-grained enterprise role access control.',
+      'AI Integration & LLMs': 'Integrating modern Generative AI models (Gemini API, OpenAI) into enterprise workflows for intelligent automation.',
+      'AI Chatbots & Agents': 'Context-aware conversational assistants, portfolio AI copilots, knowledge retrieval and real-time streaming chat.',
       'Tailwind CSS': 'Utility-first CSS powering modern design systems, glassmorphism, and responsive layouts.',
       'SQL Server': 'Relational data modeling, execution plan tuning, and Entity Framework Core optimization.',
       'PrimeNG': 'Rich accessible enterprise UI component library for complex data tables and dashboards.',

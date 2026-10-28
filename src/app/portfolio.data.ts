@@ -1,4 +1,4 @@
-export type Project = { slug:string; title:string; type:string; description:string; image:string; gallery:string[]; tags:string[]; status:string; live?:string; overview:string; features:string[] };
+export type Project = { slug: string; title: string; type: string; description: string; image: string; gallery: string[]; tags: string[]; status: string; live?: string; overview: string; features: string[] };
 export const projects: Project[] = [
   {
     slug: 'maxout-crm',
@@ -14,7 +14,7 @@ export const projects: Project[] = [
       'assets/images/CRM/messages.png',
       'assets/images/CRM/tasks_issues.png'
     ],
-    tags: ['Angular', 'ASP.NET Core', 'ABP Framework', 'SQL Server'],
+    tags: ['Angular', 'ASP.NET Core', 'ABP Framework', 'SQL Server', 'PrimeNG', 'SignalR', 'Web Sockets', 'Identity & RBAC (JWT)'],
     status: 'In production',
     live: 'https://app.maxoutcrm.com',
     overview: 'A responsive multi-tenant CRM platform supporting enterprise operations with structured task tracking, calendar management, and executive analytics.',
@@ -26,9 +26,17 @@ export const projects: Project[] = [
     type: 'Inventory Management',
     description: 'Multi-warehouse inventory system with executive dashboards and financial statements.',
     image: 'assets/images/easinventory/easinventory.JPG',
-    gallery: ['assets/images/easinventory/easinventory.JPG'],
+    gallery: [
+      'assets/images/easinventory/easinventory.JPG',
+      'assets/images/easinventory/login.png',
+      'assets/images/easinventory/dashboard.png',
+      'assets/images/easinventory/item-groups.png',
+      'assets/images/easinventory/item-master.png',
+      'assets/images/easinventory/transaction.png'
+    ],
     tags: ['Angular', '.NET Core', 'SQL Server'],
     status: 'Completed',
+    live: 'https://easinventory.netlify.app/',
     overview: 'An accounting and inventory management platform designed for multi-location businesses, real-time item tracking, and transaction audit trails.',
     features: ['Multi-warehouse inventory tracking', 'Client transaction workflows', 'Dynamic financial statements', 'Executive decision-support dashboards']
   },
@@ -37,12 +45,24 @@ export const projects: Project[] = [
     title: 'EAS Sync',
     type: 'Accounting Integration',
     description: 'Real-time synchronization application for secure accounting workflows.',
-    image: 'assets/images/easync/easync.JPG',
-    gallery: ['assets/images/easync/easync.JPG'],
-    tags: ['Angular', 'SignalR', 'SQL Server'],
+    image: 'assets/images/easync/dashboard.png',
+    gallery: [
+      'assets/images/easync/dashboard.png',
+      'assets/images/easync/quick-actions-reports.png',
+      'assets/images/easync/sales-purchase-analysis.png',
+      'assets/images/easync/payables-report.png',
+      'assets/images/easync/receivables-report.png'
+    ],
+    tags: ['Angular', 'SignalR', 'SQL Server', '.Net Core'],
     status: 'Completed',
-    overview: 'A secure synchronization engine linking desktop and cloud accounting data in real time with high availability.',
-    features: ['Real-time synchronization', 'Secure API integrations', 'Responsive Angular user experience', 'Operational reporting workflows']
+    live: 'https://easync.netlify.app/',
+    overview: 'A high-speed secure synchronization engine linking desktop and cloud accounting data in real time with high availability, live ledger drilldowns, and receivables/payables analytics.',
+    features: [
+      'Real-time bi-directional data synchronization with SignalR',
+      'Executive financial dashboard with currency rates and live balances',
+      'Granular sales & purchase analysis drilldowns',
+      'Instant receivables & payables party reports with export capabilities'
+    ]
   },
   {
     slug: 'aurum-ecommerce',
@@ -60,19 +80,34 @@ export const projects: Project[] = [
     ],
     tags: ['React', 'Tailwind CSS', 'i18n'],
     status: 'Completed',
-    live: 'https://aurummb.com',
+    // live: 'https://aurummb.com',
     overview: 'A high-converting, bilingual e-commerce marketplace built in a cross-border agile team with comprehensive localization.',
     features: ['Product catalog and dynamic search filtering', 'Cart management and checkout', 'Arabic and English localization (i18n)', 'Mobile-first responsive UX']
   }
 ];
 
-export const skills = ['Angular', 'TypeScript', '.NET Core', 'Tailwind CSS', 'SQL Server', 'PrimeNG', 'ABP Framework', 'Azure', 'Git', 'Docker'];
+export const skills = [
+  'Angular',
+  'TypeScript',
+  '.NET Core',
+  'SignalR & WebSockets',
+  'Identity & RBAC (JWT)',
+  'AI Integration & LLMs',
+  'AI Chatbots & Agents',
+  'Tailwind CSS',
+  'SQL Server',
+  'PrimeNG',
+  'ABP Framework',
+  'Azure',
+  'Git',
+  'Docker'
+];
 
 export const experience = [
   {
     company: 'Karma Software Solutions',
     role: 'Full Stack Developer',
-    dates: 'Aug 2024 - Present',
+    dates: 'Aug 2025 - Present',
     summary: 'Developing MaxOutCRM, an enterprise multi-tenant cloud CRM.',
     points: [
       'Engineered Angular and PrimeNG frontend architecture for modular enterprise modules',

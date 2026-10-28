@@ -103,8 +103,8 @@ type Message = { role: 'assistant' | 'user'; content: string };
       column-gap: 10px;
       align-items: center;
     }
-    .portfolio-chat-panel strong { font-size: 14px; }
-    .portfolio-chat-panel small { grid-column: 2; color: #9aadd3; font-size: 11px; margin-top: 2px; }
+    .portfolio-chat-panel strong { font-size: 15px; font-weight: 700; color: #f8fafc; }
+    .portfolio-chat-panel small { grid-column: 2; color: #cbd5e1; font-size: 12px; margin-top: 2px; }
     .chat-status {
       width: 8px;
       height: 8px;
@@ -113,7 +113,7 @@ type Message = { role: 'assistant' | 'user'; content: string };
       box-shadow: 0 0 10px #36e09a;
     }
     .portfolio-chat-panel header button {
-      color: #b9c9ee;
+      color: #cbd5e1;
       font-size: 24px;
       line-height: 1;
       padding: 0;
@@ -124,7 +124,7 @@ type Message = { role: 'assistant' | 'user'; content: string };
     .chat-messages {
       display: flex;
       min-height: 220px;
-      max-height: 400px;
+      max-height: 420px;
       overflow-y: auto;
       flex-direction: column;
       gap: 12px;
@@ -148,13 +148,13 @@ type Message = { role: 'assistant' | 'user'; content: string };
     .chat-message {
       align-self: flex-start;
       max-width: 88%;
-      padding: 11px 15px;
-      border: 1px solid rgba(98,130,222,.24);
+      padding: 12px 16px;
+      border: 1px solid rgba(98,130,222,.3);
       border-radius: 4px 14px 14px 14px;
       background: #112553;
-      color: #dde8ff;
-      font-size: 13px;
-      line-height: 1.6;
+      color: #f1f5f9;
+      font-size: 14.5px;
+      line-height: 1.68;
       white-space: pre-wrap;
     }
     .chat-message.user {
@@ -162,7 +162,8 @@ type Message = { role: 'assistant' | 'user'; content: string };
       border-color: rgba(170,82,255,.36);
       border-radius: 14px 4px 14px 14px;
       background: linear-gradient(120deg,#245cff,#872df2);
-      color: #fff;
+      color: #ffffff;
+      font-size: 14.5px;
     }
     .chat-suggestions {
       display: flex;
@@ -173,16 +174,17 @@ type Message = { role: 'assistant' | 'user'; content: string };
     .chat-suggestions button {
       border: 1px solid rgba(98,140,255,.45);
       border-radius: 999px;
-      padding: 6px 10px;
+      padding: 7px 12px;
       background: #0b1c44;
-      color: #a9ceff;
-      font-size: 11px;
+      color: #cbd5e1;
+      font-size: 12.5px;
       cursor: pointer;
-      transition: background .2s ease;
+      transition: all .2s ease;
     }
     .chat-suggestions button:hover {
       background: #153272;
       color: #fff;
+      border-color: #38bdf8;
     }
     .portfolio-chat-panel form {
       display: grid;
@@ -194,8 +196,9 @@ type Message = { role: 'assistant' | 'user'; content: string };
     .portfolio-chat-panel input {
       box-sizing: border-box;
       margin: 0;
-      padding: 11px 12px;
-      font-size: 12px;
+      padding: 12px 14px;
+      font-size: 14px;
+      color: #f8fafc;
       border-radius: 8px;
     }
     .portfolio-chat-panel form button {

@@ -28,7 +28,22 @@
           "configurations": { "production": { "optimization": { "scripts": true, "styles": { "minify": true, "inlineCritical": true }, "fonts": false }, "budgets": [{ "type": "initial", "maximumWarning": "2MB", "maximumError": "4MB" }], "outputHashing": "all" }, "development": { "optimization": false, "sourceMap": true } },
           "defaultConfiguration": "production"
         },
-        "serve": { "builder": "@angular/build:dev-server", "configurations": { "production": { "buildTarget": "portfolio:build:production" }, "development": { "buildTarget": "portfolio:build:development" } }, "defaultConfiguration": "development" }
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "poll": 500,
+            "liveReload": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "portfolio:build:production"
+            },
+            "development": {
+              "buildTarget": "portfolio:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
       }
     }
   }

@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "serve": "ng serve --proxy-config proxy.conf.json",
+    "serve": "ng serve --proxy-config proxy.conf.json --poll 500 --live-reload",
+    "dev": "ng serve --proxy-config proxy.conf.json --poll 500 --live-reload",
+    "dev:all": "npx -y concurrently \"node server.js\" \"ng serve --proxy-config proxy.conf.json --poll 500 --live-reload\"",
     "api": "node server.js",
     "build": "ng build --configuration production",
     "test": "ng test --watch=false"
