@@ -63,21 +63,35 @@
 <main>
   <div class="noise"></div>
   <div class="progress"></div>
+
+  <!-- FIXED FLOATING NAVBAR: ALWAYS SHOWN AT ALL SCROLL POSITIONS -->
   <header class="navbar" aria-label="Primary navigation">
-    <a class="brand" routerLink="/">
+    <a class="brand" routerLink="/" (click)="closeMenu()">
       <span>NA</span>
       <small>Nouman Ahmad</small>
     </a>
     <nav [class.open]="menuOpen">
-      <a *ngFor="let item of nav" [routerLink]="item[1]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:item[1] === '/'}" (click)="menuOpen=false">
+      <a *ngFor="let item of nav" [routerLink]="item[1]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:item[1] === '/'}" (click)="closeMenu()">
         {{ item[0] }}
       </a>
     </nav>
     <div class="nav-actions">
-      <a class="talk" routerLink="/contact">Let's Talk <span>↗</span></a>
-      <button class="menu" (click)="menuOpen=!menuOpen" aria-label="Open menu">☰</button>
+      <a class="talk" routerLink="/contact" (click)="closeMenu()">Let's Talk <span>↗</span></a>
+      <button 
+        class="menu" 
+        (click)="toggleMenu()" 
+        [attr.aria-expanded]="menuOpen" 
+        [attr.aria-label]="menuOpen ? 'Close navigation menu' : 'Open navigation menu'">
+        {{ menuOpen ? '✕' : '☰' }}
+      </button>
     </div>
   </header>
+
+  <!-- Mobile Nav Backdrop: Smooth click-outside dismiss -->
+  <div *ngIf="menuOpen" class="mobile-nav-backdrop" (click)="closeMenu()" aria-hidden="true"></div>
+
+  <!-- Content Spacer: Prevents content from being hidden behind fixed navbar -->
+  <div class="navbar-spacer" aria-hidden="true"></div>
 
   <router-outlet></router-outlet>
 

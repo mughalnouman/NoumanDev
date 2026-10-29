@@ -23,6 +23,19 @@ export class AppComponent implements OnInit, OnDestroy {
     ['Contact', '/contact']
   ];
 
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
+  }
+
+  @HostListener('window:keydown.escape')
+  onEscape() {
+    this.closeMenu();
+  }
+
   // Back to top scroll state
   showBackToTop = false;
 
@@ -138,6 +151,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private initRoutePreloader() {
     this.routerSub = this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationStart) {
+        this.closeMenu();
         // Do not trigger route loader if initial bootloader is still running
         if (this.isPreloaderVisible) return;
 
