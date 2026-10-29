@@ -55,73 +55,85 @@ app.use((req, res, next) => {
 });
 
 const portfolioKnowledge = `
-Nouman Ahmad is a Full Stack Engineer based in Lahore, Pakistan. He has 2 years of professional experience building secure, scalable, and high-performance enterprise web applications.
+Nouman Ahmad is a Full Stack Developer based in Lahore, Pakistan, with around 2 years of experience building and shipping multi-tenant CRM, ERP, accounting, and inventory applications using ASP.NET Core, ABP Framework, Angular (17+), and Microsoft SQL Server. Open to remote roles and relocation.
 
-Core Skills & Technical Toolkit:
-- Frontend: Angular (v14-v19), TypeScript, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, Bootstrap, PrimeNG.
-- Backend: ASP.NET Core, .NET Core, C#, Entity Framework Core (EF Core), ABP Framework, SignalR, LINQ, RESTful APIs, JWT Authentication, Role-Based Access Control (RBAC), Clean Architecture, SOLID Principles.
-- Databases & Data: SQL Server, SSMS, Relational Database Modeling, Query Optimization.
-- Cloud & DevOps: Microsoft Azure, Docker, Git, GitHub, Postman, CI/CD Workflows.
-- Workflow & Tooling: AI-assisted development workflows with strict code ownership, unit testing, and Clean Code standards.
+Contact & Profiles:
+- Phone / WhatsApp: +92 321 4940440
+- Email: mughalnouman678@gmail.com
+- Location: Lahore, Pakistan (Open to Remote & Relocation)
+- LinkedIn: https://linkedin.com/in/nouman-ahmad-59022942a
+- GitHub: https://github.com/mughalnouman
+- Portfolio: noumandev.vercel.app
+
+Technical Skills:
+- Frontend: Angular 17+, TypeScript, RxJS, JavaScript (ES6+), HTML5, CSS3, PrimeNG, Tailwind CSS.
+- Backend: C#, ASP.NET Core Web API (.NET 8), ABP Framework, Entity Framework Core, RESTful APIs, SignalR, LINQ, Background Jobs, RBAC, Multi-Tenancy, JWT Authentication, Clean Architecture, Swagger/OpenAPI, Stripe API.
+- Database: Microsoft SQL Server, Schema Design, Query Optimization, SSMS.
+- AI & Chatbots: Google Gemini API, AI Chatbot Integration, Prompt Engineering, Context Grounding, AI-Assisted Development.
+- Tools & Practices: GitHub, Postman, Visual Studio, VS Code, Cursor, CI/CD, Agile/Scrum.
 
 Professional Experience:
-1. Karma Software Solutions — Full Stack Developer (Aug 2024 – Present)
-   - Architected and built MaxOutCRM: multi-tenant enterprise CRM application.
-   - Built Angular and PrimeNG UI modules with responsive design.
-   - Designed ASP.NET Core & ABP Framework REST APIs with RBAC and JWT security.
-   - Implemented real-time integrations, chat and notification services using SignalR.
-   - Integrated comprehensive financial reporting and executive analytics dashboards.
+1. Karma Software Solutions — Full Stack Developer (Aug 2025 – Present)
+   Product: MaxOutCRM
+   - Build Angular interfaces and ASP.NET Core (ABP Framework) REST APIs for task tracking, meeting scheduling, and tenant management in MaxOutCRM, a production multi-tenant CRM with 100+ tenants and 1,000+ users.
+   - Delivered analytics dashboards, a per-user Task Completion Report, and custom financial reports used across 100+ tenants.
+   - Designed granular role-based access control (RBAC) with JWT authentication, strictly enforcing permissions per user and per tenant.
+   - Optimized Microsoft SQL Server schema design and queries, cutting dashboard/report load time from 8 seconds to 3 seconds.
+   - Independently shipped complex modules end-to-end, including SignalR real-time chat, notifications, and Stripe payment integration.
+   - Tech: C#, ASP.NET Core, ABP Framework, Angular, TypeScript, Entity Framework Core, SignalR, MS SQL Server, JWT, Stripe API.
 
-2. Expert Accounting Software — Full Stack Web Developer (Apr 2024 – Jun 2025)
-   - Developed EAS Inventory Management and EAS Sync applications using Angular and ASP.NET Core.
-   - Built multi-warehouse inventory systems, client transaction pipelines, and dynamic financial statements.
-   - Developed real-time synchronization pipelines using SignalR and SQL Server.
+2. Expert Accounting Software — Angular Developer (Full Stack Contributions) (Apr 2024 – Jun 2025)
+   Products: EAS Inventory Management | EAS Sync App
+   - Built Angular applications for accounting and multi-warehouse inventory management, used by multiple enterprise clients.
+   - Developed secure ASP.NET Core Web APIs for data synchronization in EAS Sync App and automated dynamic financial statement generation.
+   - Implemented multi-warehouse stock tracking, client transaction modules, and executive decision support dashboards.
+   - Tech: Angular, TypeScript, RxJS, ASP.NET Core Web API, C#, MS SQL Server, SignalR.
 
-3. Aurum Memorabilia, Bahrain — Frontend Developer (Feb 2024 – Mar 2024)
-   - Created a bilingual e-commerce collectible marketplace using React and Tailwind CSS.
-   - Built product catalog, search filters, cart management, and Arabic/English (i18n) localization.
+3. Aurum Memorabilia (Bahrain) — Frontend Developer (Feb 2024 – Mar 2024)
+   Project: Aurum E-Commerce Website
+   - Built product catalog, multi-criteria search filters, and cart management with Arabic/English bilingual localization in a 5-member cross-border Agile team.
+   - Tech: React, JavaScript, HTML5, CSS3, Tailwind CSS.
 
-4. Cloudy365 Pvt Ltd — Full Stack Web Developer Intern (Oct 2020 – Jan 2021)
-   - Contributed to ERP and sales management interfaces with HTML, CSS, Bootstrap, JavaScript.
-   - Built ASP.NET Web API integrations and Android sales screens.
+4. Cloudy365 Pvt Ltd — Full Stack Web Developer (Intern) (Oct 2020 – Jan 2021)
+   Project: ESESOL ERP
+   - Built ERP front-end screens and ASP.NET Web API integration for the ESESOL ERP system and its Android sales app.
+   - Tech: ASP.NET Web API, C#, HTML, CSS, Bootstrap, JavaScript.
 
 Featured Projects:
 1. MaxOutCRM:
-   - Type: Enterprise Multi-tenant CRM
-   - Stack: Angular, ASP.NET Core, ABP Framework, SQL Server
+   - Type: Production Enterprise Multi-Tenant CRM (100+ tenants, 1,000+ active users)
+   - Stack: Angular 17+, ASP.NET Core (.NET 8), ABP Framework, SQL Server, PrimeNG, SignalR, Stripe API
    - Status: In production
    - Live URL: https://app.maxoutcrm.com
-   - Highlights: Interactive analytics dashboards, custom financial reporting, RBAC, real-time chat and notifications.
+   - Highlights: Per-user & per-tenant RBAC, query speedup from 8s to 3s, real-time chat, automated financial reporting.
 
 2. EAS Inventory:
-   - Type: Inventory Management Platform
-   - Stack: Angular, .NET Core, SQL Server
+   - Type: Multi-Warehouse Inventory Management System
+   - Stack: Angular, ASP.NET Core Web API, C#, SQL Server, RxJS
    - Status: Completed
-   - Highlights: Multi-warehouse tracking, transaction workflows, dynamic financial statements, executive dashboards.
+   - Live URL: https://easinventory.netlify.app/
+   - Highlights: Multi-warehouse tracking, client transaction workflows, dynamic financial statements, executive dashboards.
 
-3. EAS Sync:
-   - Type: Accounting Integration Application
-   - Stack: Angular, SignalR, SQL Server
+3. EAS Sync App:
+   - Type: Real-Time Accounting Data Synchronization Engine
+   - Stack: Angular, ASP.NET Core Web API, SignalR, SQL Server, C#
    - Status: Completed
-   - Highlights: Real-time synchronization, secure API integrations, operational reporting.
+   - Live URL: https://easync.netlify.app/
+   - Highlights: Bi-directional SignalR data synchronization between desktop and cloud, live ledger drilldowns, party payables/receivables reports.
 
-4. Aurum E-Commerce:
-   - Type: Marketplace Experience
-   - Stack: React, Tailwind CSS, i18n
+4. AI Website Chatbots:
+   - Type: Intelligent Site-Grounded Conversational Assistants
+   - Stack: Angular, ASP.NET Core, Google Gemini API
+   - Highlights: Gemini-powered chatbots for portfolio and insurance advisor site, answering strictly from site-specific content through prompt engineering and context grounding.
+
+5. Aurum E-Commerce:
+   - Type: Bilingual Collectible Marketplace
+   - Stack: React, JavaScript, HTML5, CSS3, Tailwind CSS, i18n
    - Status: Completed
-   - Live URL: https://aurummb.com
-   - Highlights: Bilingual Arabic/English catalog, search filtering, cart management.
-
-Contact Information:
-- Email: mughalnouman678@gmail.com
-- WhatsApp / Phone: +92 321 4940440
-- Location: Lahore, Pakistan
-- LinkedIn: https://linkedin.com/in/nouman-ahmad-59022942a
-- GitHub: https://github.com/mughalnouman
+   - Highlights: Arabic (RTL) / English (LTR) localization, multi-criteria filters, cart management.
 
 Education:
-- Bachelor of Science in Computer Science (BSCS), The Superior College, Lahore (Graduated 2020).
-- Intermediate in Computer Science (ICS), Govt. Islamia College, Lahore (2016).
+- Bachelor of Science in Computer Science (BSCS) — The Superior College, Lahore (Graduated May 2020).
 `;
 
 const systemInstruction = `You are Nouman Ahmad's professional portfolio assistant. Answer questions ONLY from the provided portfolio knowledge about Nouman Ahmad, his projects, technical skills, professional work experience, education, and contact details.
