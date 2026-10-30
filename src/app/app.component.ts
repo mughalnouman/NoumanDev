@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, HostListener, ViewEncapsulation } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { PortfolioChatComponent } from './portfolio-chat.component';
+import { CvService } from './cv.service';
 import { gsap } from 'gsap';
 
 @Component({
@@ -73,9 +74,16 @@ export class AppComponent implements OnInit, OnDestroy {
   private routeInterval: any;
   private routerSub: any;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    public cv: CvService
+  ) {}
 
   ngOnInit() {
+    this.route.queryParamMap.subscribe(() => {
+      this.cv.initFromQueryParamOrStorage();
+    });
     this.initBootloader();
     this.initRoutePreloader();
   }

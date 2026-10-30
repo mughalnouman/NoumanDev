@@ -10,7 +10,7 @@
     "dev:all": "npx -y concurrently \"node server.js\" \"ng serve --proxy-config proxy.conf.json --poll 500 --live-reload\"",
     "api": "node server.js",
     "build": "ng build --configuration production",
-    "test": "node --experimental-strip-types --test tests/portfolio-data.test.js tests/component-logic.test.js tests/responsive-and-css.test.js tests/server-security.test.js"
+    "test": "node --experimental-strip-types --test tests/portfolio-data.test.js tests/component-logic.test.js tests/responsive-and-css.test.js tests/server-security.test.js tests/cv-service.test.js"
   },
   "dependencies": {
     "@angular/animations": "^19.2.0",

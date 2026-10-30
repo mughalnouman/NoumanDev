@@ -5123,3 +5123,87 @@ img, svg, video, canvas {
     height: 18px;
   }
 }
+
+/* ==========================================================================
+   DYNAMIC CV RESUME EDITION SWITCHER & RECRUITER BADGES
+   ========================================================================== */
+.cv-switcher-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  background: rgba(13, 22, 46, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 9999px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.cv-switcher-label {
+  font-size: 11.5px;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-left: 6px;
+  padding-right: 2px;
+}
+
+.cv-pill-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.cv-pill-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.cv-pill-btn.active {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(129, 140, 248, 0.25));
+  border-color: rgba(56, 189, 248, 0.55);
+  color: #38bdf8;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.28);
+}
+
+.cv-edition-badge {
+  font-size: 13px;
+  margin-left: 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cv-switcher-contact {
+  margin-top: 14px;
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .cv-switcher-row {
+    flex-wrap: wrap;
+    border-radius: 14px;
+    padding: 6px;
+    width: 100%;
+    justify-content: center;
+  }
+  .cv-pill-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+}

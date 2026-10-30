@@ -55,15 +55,21 @@ app.use((req, res, next) => {
 });
 
 const portfolioKnowledge = `
-Nouman Ahmad is a Full Stack Developer based in Lahore, Pakistan, with around 2 years of experience building and shipping multi-tenant CRM, ERP, accounting, and inventory applications using ASP.NET Core, ABP Framework, Angular (17+), and Microsoft SQL Server. Open to remote roles and relocation.
+Nouman Ahmad is a Full Stack Developer based in Lahore, Pakistan, with around 2 years of experience building and shipping multi-tenant CRM, ERP, accounting, and inventory applications using ASP.NET Core, ABP Framework, Angular (17+), and Microsoft SQL Server. Open to Remote roles and open to relocate to the UAE. Notice period: Immediate.
 
 Contact & Profiles:
 - Phone / WhatsApp: +92 321 4940440
 - Email: mughalnouman678@gmail.com
-- Location: Lahore, Pakistan (Open to Remote & Relocation)
+- Location: Lahore, Pakistan (Open to relocate to the UAE | Open to Remote)
+- Nationality: Pakistani
+- Notice Period: Immediate
 - LinkedIn: https://linkedin.com/in/nouman-ahmad-59022942a
 - GitHub: https://github.com/mughalnouman
 - Portfolio: noumandev.vercel.app
+
+Resume / CV Versions:
+- Global / UAE & Remote Resume: Available directly via query param ?target=global or download at assets/documents/Nouman_Ahmad_Global_Resume.pdf
+- Pakistan / Enterprise CV: Download at assets/documents/Nouman_Ahmad_Pakistan_CV.pdf
 
 Technical Skills:
 - Frontend: Angular 17+, TypeScript, RxJS, JavaScript (ES6+), HTML5, CSS3, PrimeNG, Tailwind CSS.

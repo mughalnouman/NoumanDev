@@ -19,7 +19,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               { "glob": "**/*", "input": "images", "output": "assets/images" },
-              { "glob": "NoumanAhmad_FullStack.pdf", "input": "src/cv", "output": "assets/documents" },
+              { "glob": "**/*", "input": "src/cv", "output": "assets/documents" },
               "src/favicon.ico",
               "src/favicon.png"
             ],

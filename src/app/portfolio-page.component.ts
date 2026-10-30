@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { experience, projects, skills, Project } from './portfolio.data';
+import { CvService } from './cv.service';
 
 @Component({
   selector: 'app-portfolio-page',
@@ -56,7 +57,7 @@ import { experience, projects, skills, Project } from './portfolio.data';
               </div>
             </div>
             <div class="about-actions" style="margin-top: 24px;">
-              <a class="primary" href="assets/documents/Nouman_Ahmad_FullStack_Developer.pdf" download>Download CV (PDF) →</a>
+              <a class="primary" [href]="cv.current().url" download>Download Resume →</a>
               <a class="whatsapp-btn" [href]="whatsAppLink" target="_blank" rel="noopener">Connect on WhatsApp ↗</a>
             </div>
           </div>
@@ -515,11 +516,11 @@ import { experience, projects, skills, Project } from './portfolio.data';
                 <span>✓ Clean Architecture</span>
                 <span>✓ Global Remote Ready</span>
               </div>
-              <a class="download-cv-btn" href="assets/documents/Nouman_Ahmad_FullStack_Developer.pdf" download>
+              <a class="download-cv-btn" [href]="cv.current().url" download>
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
-                Download Verified Resume
+                Download Resume
               </a>
             </div>
           </div>
@@ -802,11 +803,12 @@ export class PortfolioPageComponent implements OnInit {
     '🛠️ Architecture Review & Code Audit'
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, public cv: CvService) {}
 
   ngOnInit() {
     this.route.data.subscribe((d: any) => this.page = d['page']);
     this.route.paramMap.subscribe((p: any) => this.project = projects.find(x => x.slug === p.get('slug')));
+    this.route.queryParamMap.subscribe(() => this.cv.initFromQueryParamOrStorage());
   }
 
   techIcon(skill: string): string {

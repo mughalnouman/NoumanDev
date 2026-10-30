@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { projects, skills } from './portfolio.data';
+import { CvService } from './cv.service';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -54,11 +55,11 @@ if (typeof window !== 'undefined') {
             <span>Explore Architecture & Projects</span>
             <span class="btn-arrow">→</span>
           </a>
-          <a class="secondary" href="assets/documents/Nouman_Ahmad_FullStack_Developer.pdf" download>
+          <a class="secondary" [href]="cv.current().url" download>
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
             </svg>
-            Download CV
+            Download Resume
           </a>
           <a class="whatsapp-btn" [href]="whatsAppLink" target="_blank" rel="noopener">
             <svg class="w-4 h-4 mr-1.5" viewBox="0 0 24 24" fill="#25D366">
@@ -685,7 +686,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     'c-4', 'c-3', 'c-4', 'c-2', 'c-4', 'c-3', 'c-4'
   ];
 
+  constructor(public cv: CvService, private route: ActivatedRoute) {}
+
   ngOnInit() {
+    this.route.queryParamMap.subscribe(() => {
+      this.cv.initFromQueryParamOrStorage();
+    });
     this.startTypewriter();
   }
 
