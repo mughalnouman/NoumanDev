@@ -18,25 +18,29 @@ test('CV Service & Dual Edition Suite: Files & Profiles Verification', async (t)
     assert.ok(localStat.size > 500000, `Local CV size must be > 500KB (actual: ${localStat.size})`);
   });
 
-  await t.test('Mock CvService query param detection edge cases', () => {
+  await t.test('CvService smart detection with timezone, offset, IP and query param priorities', () => {
     class MockCvService {
       mode = 'local';
+      hasExplicitParam = false;
 
       profiles = {
         global: {
           mode: 'global',
+          fileName: 'Nouman_Ahmad_Global_Resume.pdf',
           url: 'assets/documents/Nouman_Ahmad_Global_Resume.pdf',
           buttonText: 'Download Resume'
         },
         local: {
           mode: 'local',
+          fileName: 'Nouman_Ahmad_Pakistan_CV.pdf',
           url: 'assets/documents/Nouman_Ahmad_Pakistan_CV.pdf',
           buttonText: 'Download Resume'
         }
       };
 
-      detect(queryString) {
-        const params = new URLSearchParams(queryString);
+      detect(queryString, mockTimeZone, mockOffset) {
+        this.hasExplicitParam = false;
+        const params = new URLSearchParams(queryString || '');
         const target = (
           params.get('target') ||
           params.get('cv') ||
@@ -45,11 +49,31 @@ test('CV Service & Dual Edition Suite: Files & Profiles Verification', async (t)
           params.get('region')
         )?.toLowerCase();
 
-        if (target === 'global' || target === 'remote' || target === 'uae') {
+        // 1. Explicit query parameter has highest priority
+        if (target === 'global' || target === 'remote' || target === 'uae' || target === 'intl') {
+          this.hasExplicitParam = true;
           this.mode = 'global';
-        } else if (target === 'local' || target === 'pk' || target === 'pakistan') {
-          this.mode = 'local';
+          return;
         }
+        if (target === 'local' || target === 'pk' || target === 'pakistan') {
+          this.hasExplicitParam = true;
+          this.mode = 'local';
+          return;
+        }
+
+        // 2. Fallback to Timezone / Offset detection
+        const tz = (mockTimeZone || '').toLowerCase();
+        if (tz.includes('karachi') || tz.includes('pakistan') || mockOffset === -300) {
+          this.mode = 'local';
+        } else {
+          // Visitor from UAE, USA, Europe, etc.
+          this.mode = 'global';
+        }
+      }
+
+      applyIpCountry(countryCode) {
+        if (this.hasExplicitParam) return;
+        this.mode = countryCode.toUpperCase() === 'PK' ? 'local' : 'global';
       }
 
       get current() {
@@ -58,36 +82,46 @@ test('CV Service & Dual Edition Suite: Files & Profiles Verification', async (t)
     }
 
     const service = new MockCvService();
-    assert.strictEqual(service.mode, 'local', 'Default should be local');
 
-    // Scenario 1: ?target=global
-    service.detect('?target=global');
-    assert.strictEqual(service.mode, 'global');
-    assert.strictEqual(service.current.url, 'assets/documents/Nouman_Ahmad_Global_Resume.pdf');
-
-    // Scenario 2: ?cv=global
-    service.mode = 'local';
-    service.detect('?cv=global');
-    assert.strictEqual(service.mode, 'global');
-
-    // Scenario 3: ?target=uae (relocation target)
-    service.mode = 'local';
-    service.detect('?target=uae');
-    assert.strictEqual(service.mode, 'global');
-
-    // Scenario 4: ?target=local
-    service.detect('?target=local');
-    assert.strictEqual(service.mode, 'local');
+    // Scenario 1: Pakistan visitor on standard URL -> Pakistan CV
+    service.detect('', 'Asia/Karachi');
+    assert.strictEqual(service.mode, 'local', 'Pakistan visitor should automatically get local CV');
     assert.strictEqual(service.current.url, 'assets/documents/Nouman_Ahmad_Pakistan_CV.pdf');
+    assert.strictEqual(service.current.fileName, 'Nouman_Ahmad_Pakistan_CV.pdf');
 
-    // Scenario 5: Multiple query params (?source=linkedin&target=global&utm_campaign=hiring)
-    service.detect('?source=linkedin&target=global&utm_campaign=hiring');
-    assert.strictEqual(service.mode, 'global');
+    // Scenario 2: UAE visitor on standard URL -> Global Resume
+    service.detect('', 'Asia/Dubai');
+    assert.strictEqual(service.mode, 'global', 'UAE visitor should automatically get Global Resume');
+    assert.strictEqual(service.current.url, 'assets/documents/Nouman_Ahmad_Global_Resume.pdf');
+    assert.strictEqual(service.current.fileName, 'Nouman_Ahmad_Global_Resume.pdf');
 
-    // Scenario 6: Case insensitivity (?target=GLOBAL)
-    service.mode = 'local';
-    service.detect('?target=GLOBAL');
-    assert.strictEqual(service.mode, 'global');
+    // Scenario 3: US visitor on standard URL -> Global Resume
+    service.detect('', 'America/New_York');
+    assert.strictEqual(service.mode, 'global', 'US visitor should automatically get Global Resume');
+
+    // Scenario 4: UK visitor on standard URL -> Global Resume
+    service.detect('', 'Europe/London');
+    assert.strictEqual(service.mode, 'global', 'UK visitor should automatically get Global Resume');
+
+    // Scenario 5: Explicit ?target=global overrides Pakistan timezone
+    service.detect('?target=global', 'Asia/Karachi');
+    assert.strictEqual(service.mode, 'global', '?target=global query param must take precedence over timezone');
+
+    // Scenario 6: Explicit ?target=local overrides foreign timezone
+    service.detect('?target=local', 'Asia/Dubai');
+    assert.strictEqual(service.mode, 'local', '?target=local query param must take precedence over foreign timezone');
+
+    // Scenario 7: IP country verification updates mode when no query param
+    service.detect('', 'Asia/Karachi');
+    service.applyIpCountry('US');
+    assert.strictEqual(service.mode, 'global', 'US IP address switches to global resume');
+
+    service.applyIpCountry('PK');
+    assert.strictEqual(service.mode, 'local', 'PK IP address switches to Pakistan CV');
+
+    // Scenario 8: Query param is locked against IP changes
+    service.detect('?target=global', 'Asia/Karachi');
+    service.applyIpCountry('PK');
+    assert.strictEqual(service.mode, 'global', 'Explicit query param stays locked even if IP is PK');
   });
 });
-
