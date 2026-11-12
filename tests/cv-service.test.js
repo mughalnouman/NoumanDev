@@ -4,18 +4,26 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 test('CV Service & Dual Edition Suite: Files & Profiles Verification', async (t) => {
-  const globalCvPath = path.resolve(process.cwd(), 'src/cv/Nouman_Ahmad_Global_Resume.pdf');
-  const localCvPath = path.resolve(process.cwd(), 'src/cv/Nouman_Ahmad_Pakistan_CV.pdf');
+  const globalCvPath = path.resolve(process.cwd(), 'src/cv/global/Nouman_Ahmad_FullStack_Developer.pdf');
+  const localCvPath = path.resolve(process.cwd(), 'src/cv/pakistan/Nouman_Ahmad_FullStack_Developer.pdf');
+  const legacyGlobalCvPath = path.resolve(process.cwd(), 'src/cv/Nouman_Ahmad_Global_Resume.pdf');
+  const legacyLocalCvPath = path.resolve(process.cwd(), 'src/cv/Nouman_Ahmad_Pakistan_CV.pdf');
 
-  await t.test('both Global and Local CV PDF files exist on disk with valid file size', () => {
-    assert.ok(fs.existsSync(globalCvPath), 'Global Resume PDF must exist in src/cv');
-    assert.ok(fs.existsSync(localCvPath), 'Pakistan CV PDF must exist in src/cv');
+  await t.test('both Global and Local CV PDF files exist on disk with valid file size and clean naming', () => {
+    assert.ok(fs.existsSync(globalCvPath), 'Global Resume PDF must exist in src/cv/global');
+    assert.ok(fs.existsSync(localCvPath), 'Pakistan CV PDF must exist in src/cv/pakistan');
+    assert.ok(fs.existsSync(legacyGlobalCvPath), 'Legacy Global Resume PDF must exist for backward compatibility');
+    assert.ok(fs.existsSync(legacyLocalCvPath), 'Legacy Pakistan CV PDF must exist for backward compatibility');
 
     const globalStat = fs.statSync(globalCvPath);
     const localStat = fs.statSync(localCvPath);
 
     assert.ok(globalStat.size > 500000, `Global Resume size must be > 500KB (actual: ${globalStat.size})`);
     assert.ok(localStat.size > 500000, `Local CV size must be > 500KB (actual: ${localStat.size})`);
+    
+    // Ensure clean naming without "global" or "pakistan" in downloaded file names
+    assert.strictEqual(path.basename(globalCvPath), 'Nouman_Ahmad_FullStack_Developer.pdf');
+    assert.strictEqual(path.basename(localCvPath), 'Nouman_Ahmad_FullStack_Developer.pdf');
   });
 
   await t.test('CvService smart detection with timezone, offset, IP and query param priorities', () => {
@@ -26,14 +34,14 @@ test('CV Service & Dual Edition Suite: Files & Profiles Verification', async (t)
       profiles = {
         global: {
           mode: 'global',
-          fileName: 'Nouman_Ahmad_Global_Resume.pdf',
-          url: 'assets/documents/Nouman_Ahmad_Global_Resume.pdf',
+          fileName: 'Nouman_Ahmad_FullStack_Developer.pdf',
+          url: 'assets/documents/global/Nouman_Ahmad_FullStack_Developer.pdf',
           buttonText: 'Download Resume'
         },
         local: {
           mode: 'local',
-          fileName: 'Nouman_Ahmad_Pakistan_CV.pdf',
-          url: 'assets/documents/Nouman_Ahmad_Pakistan_CV.pdf',
+          fileName: 'Nouman_Ahmad_FullStack_Developer.pdf',
+          url: 'assets/documents/pakistan/Nouman_Ahmad_FullStack_Developer.pdf',
           buttonText: 'Download Resume'
         }
       };
@@ -83,17 +91,17 @@ test('CV Service & Dual Edition Suite: Files & Profiles Verification', async (t)
 
     const service = new MockCvService();
 
-    // Scenario 1: Pakistan visitor on standard URL -> Pakistan CV
+    // Scenario 1: Pakistan visitor on standard URL -> Pakistan CV (without picture)
     service.detect('', 'Asia/Karachi');
     assert.strictEqual(service.mode, 'local', 'Pakistan visitor should automatically get local CV');
-    assert.strictEqual(service.current.url, 'assets/documents/Nouman_Ahmad_Pakistan_CV.pdf');
-    assert.strictEqual(service.current.fileName, 'Nouman_Ahmad_Pakistan_CV.pdf');
+    assert.strictEqual(service.current.url, 'assets/documents/pakistan/Nouman_Ahmad_FullStack_Developer.pdf');
+    assert.strictEqual(service.current.fileName, 'Nouman_Ahmad_FullStack_Developer.pdf', 'Downloaded filename must not contain pakistan or global');
 
-    // Scenario 2: UAE visitor on standard URL -> Global Resume
+    // Scenario 2: UAE visitor on standard URL -> Global Resume (with picture)
     service.detect('', 'Asia/Dubai');
     assert.strictEqual(service.mode, 'global', 'UAE visitor should automatically get Global Resume');
-    assert.strictEqual(service.current.url, 'assets/documents/Nouman_Ahmad_Global_Resume.pdf');
-    assert.strictEqual(service.current.fileName, 'Nouman_Ahmad_Global_Resume.pdf');
+    assert.strictEqual(service.current.url, 'assets/documents/global/Nouman_Ahmad_FullStack_Developer.pdf');
+    assert.strictEqual(service.current.fileName, 'Nouman_Ahmad_FullStack_Developer.pdf', 'Downloaded filename must not contain pakistan or global');
 
     // Scenario 3: US visitor on standard URL -> Global Resume
     service.detect('', 'America/New_York');
@@ -106,10 +114,12 @@ test('CV Service & Dual Edition Suite: Files & Profiles Verification', async (t)
     // Scenario 5: Explicit ?target=global overrides Pakistan timezone
     service.detect('?target=global', 'Asia/Karachi');
     assert.strictEqual(service.mode, 'global', '?target=global query param must take precedence over timezone');
+    assert.strictEqual(service.current.url, 'assets/documents/global/Nouman_Ahmad_FullStack_Developer.pdf');
 
     // Scenario 6: Explicit ?target=local overrides foreign timezone
     service.detect('?target=local', 'Asia/Dubai');
     assert.strictEqual(service.mode, 'local', '?target=local query param must take precedence over foreign timezone');
+    assert.strictEqual(service.current.url, 'assets/documents/pakistan/Nouman_Ahmad_FullStack_Developer.pdf');
 
     // Scenario 7: IP country verification updates mode when no query param
     service.detect('', 'Asia/Karachi');

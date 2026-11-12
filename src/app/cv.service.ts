@@ -24,8 +24,8 @@ export class CvService {
   readonly profiles: Record<CvMode, CvProfile> = {
     global: {
       mode: 'global',
-      fileName: 'Nouman_Ahmad_Global_Resume.pdf',
-      url: 'assets/documents/Nouman_Ahmad_Global_Resume.pdf',
+      fileName: 'Nouman_Ahmad_FullStack_Developer.pdf',
+      url: 'assets/documents/global/Nouman_Ahmad_FullStack_Developer.pdf',
       buttonText: 'Download Resume',
       tag: 'Global / UAE & Remote',
       tagEmoji: '🌍',
@@ -34,8 +34,8 @@ export class CvService {
     },
     local: {
       mode: 'local',
-      fileName: 'Nouman_Ahmad_Pakistan_CV.pdf',
-      url: 'assets/documents/Nouman_Ahmad_Pakistan_CV.pdf',
+      fileName: 'Nouman_Ahmad_FullStack_Developer.pdf',
+      url: 'assets/documents/pakistan/Nouman_Ahmad_FullStack_Developer.pdf',
       buttonText: 'Download Resume',
       tag: 'Pakistan / Local',
       tagEmoji: '🇵🇰',
